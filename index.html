@@ -78,6 +78,7 @@ html,body{min-height:100%;font-family:'Noto Sans TC',system-ui,sans-serif;backgr
 .scope-fav{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding-top:7px;margin-top:7px;border-top:1px solid var(--bd)}
 .sp.fav{border-style:dashed}
 .sp.fav:hover{border-style:solid}
+.sp.fav.on{border-style:solid}
 .scope-now{margin-left:auto;font-size:12px;color:var(--brand);font-weight:700;background:var(--red-bg);border:1px solid var(--red-bd);border-radius:999px;padding:3px 12px;white-space:nowrap}
 
 /* ── KPI ── */
@@ -291,12 +292,12 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
       </div>
       <div class="scope-fav">
         <span class="scope-lbl">常用</span>
-        <button class="sp sm fav" onclick="pickPreset(['清福','清春','清山'])">8F·福春山</button>
-        <button class="sp sm fav" onclick="pickPreset(['清氣','清日','清泉'])">7F·氣日泉</button>
-        <button class="sp sm fav" onclick="pickPreset(['清心','清照','清水'])">6F·心照水</button>
-        <button class="sp sm fav" onclick="pickPreset(['清平','清風','清清'])">5F·平風清</button>
-        <button class="sp sm fav" onclick="pickPreset(['清安','清景','清涼'])">3F·安景涼</button>
-        <button class="sp sm fav" onclick="pickPreset(['護理之家'])">護理之家</button>
+        <button class="sp sm fav" data-facs="清福,清春,清山" onclick="pickPreset(['清福','清春','清山'])">8F·福春山</button>
+        <button class="sp sm fav" data-facs="清氣,清日,清泉" onclick="pickPreset(['清氣','清日','清泉'])">7F·氣日泉</button>
+        <button class="sp sm fav" data-facs="清心,清照,清水" onclick="pickPreset(['清心','清照','清水'])">6F·心照水</button>
+        <button class="sp sm fav" data-facs="清平,清風,清清" onclick="pickPreset(['清平','清風','清清'])">5F·平風清</button>
+        <button class="sp sm fav" data-facs="清安,清景,清涼" onclick="pickPreset(['清安','清景','清涼'])">3F·安景涼</button>
+        <button class="sp sm fav" data-facs="護理之家" onclick="pickPreset(['護理之家'])">護理之家</button>
       </div>
       <div class="scope-l2" id="scope-l2" style="display:none">
         <span class="scope-lbl">機構<span class="scope-hint"> · 可複選</span></span>
@@ -547,7 +548,7 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
               </div>
               <div style="font-size:12px;color:var(--ts)">護理之家・清福・清春・清山・清氣・清日・清泉・清心・清照・清水・清平・清風・清清・清安・清景・清涼</div>
             </div>
-            <div class="prow"><span class="prn" style="color:var(--tm)">版本</span><span>v2.1 版面高度修正・可正常捲動</span></div>
+            <div class="prow"><span class="prn" style="color:var(--tm)">版本</span><span>v2.2 本館常用機構可複選疊加</span></div>
             <div class="prow"><span class="prn" style="color:var(--tm)">資料模式</span><span class="pill y">示範假資料</span></div>
             <div class="prow"><span class="prn" style="color:var(--tm)">下一階段</span><span style="font-size:12px">內容函數 &amp; 資料接入</span></div>
           </div>
@@ -586,6 +587,7 @@ function setGroup(btn, group) {
     l2btn.innerHTML = '';
   }
   updateClearBtn();
+  syncPresetBtns();
   filterAll();
 }
 
@@ -595,6 +597,7 @@ function toggleFac(btn, fac) {
   if (i >= 0) { selFacs.splice(i, 1); btn.classList.remove('on'); }
   else        { selFacs.push(fac);    btn.classList.add('on');    }
   updateClearBtn();
+  syncPresetBtns();
   filterAll();
 }
 
@@ -602,6 +605,7 @@ function clearFacs() {
   selFacs = [];
   document.querySelectorAll('#scope-l2-btns .sp').forEach(b => b.classList.remove('on'));
   updateClearBtn();
+  syncPresetBtns();
   filterAll();
 }
 
@@ -725,12 +729,23 @@ function pickFacility(fac){
   l2btn.innerHTML=ORGS[group].map(f=>'<button class="sp sm'+(f===fac?' on':'')+'" data-fac="'+f+'" onclick="toggleFac(this,\''+f+'\')">'+f+'</button>').join('');
   l2.style.display=''; updateClearBtn();
 }
+function syncPresetBtns(){
+  document.querySelectorAll('.fav[data-facs]').forEach(b=>{
+    const fs=b.dataset.facs.split(',');
+    const on=curGroup==='本館'&&fs.length>0&&fs.every(f=>selFacs.includes(f));
+    b.classList.toggle('on',on);
+  });
+}
 function pickPreset(facs){
-  curGroup='本館'; selFacs=facs.slice();
+  // 切換到本館；若原本不在本館，先清空既有選取
+  if(curGroup!=='本館'){ curGroup='本館'; selFacs=[]; }
+  const allIn=facs.every(f=>selFacs.includes(f));
+  if(allIn){ selFacs=selFacs.filter(f=>facs.indexOf(f)<0); }   // 已全選 → 取消這組
+  else { facs.forEach(f=>{ if(selFacs.indexOf(f)<0) selFacs.push(f); }); }  // 疊加這組
   document.querySelectorAll('.scope-l1 .sp').forEach(b=>b.classList.toggle('on', b.textContent.trim()==='本館'));
   const l2=document.getElementById('scope-l2'), l2btn=document.getElementById('scope-l2-btns');
-  l2btn.innerHTML=ORGS['本館'].map(f=>'<button class="sp sm'+(facs.indexOf(f)>=0?' on':'')+'" data-fac="'+f+'" onclick="toggleFac(this,\''+f+'\')">'+f+'</button>').join('');
-  l2.style.display=''; updateClearBtn(); filterAll();
+  l2btn.innerHTML=ORGS['本館'].map(f=>'<button class="sp sm'+(selFacs.indexOf(f)>=0?' on':'')+'" data-fac="'+f+'" onclick="toggleFac(this,\''+f+'\')">'+f+'</button>').join('');
+  l2.style.display=''; syncPresetBtns(); updateClearBtn(); filterAll();
 }
 function drill(fac,cat){ pickFacility(fac); const t=CAT_TARGET[cat]||['dashboard','']; goAlert(t[0],t[1]); }
 function pickFacOnly(fac){ pickFacility(fac); filterAll(); }
