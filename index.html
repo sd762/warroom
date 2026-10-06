@@ -2,24 +2,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap">
 <style>
-:root {
-  --sb: #1e2235; --sb-t: #94a3b8; --sb-act: rgba(229,62,109,.15); --sb-act-t: #e53e6d;
-  --sb-hov: rgba(255,255,255,.05); --brand: #e53e6d;
-  --bg: #f0f3f9; --card: #ffffff; --tp: #1a1f36; --ts: #64748b; --tm: #94a3b8;
-  --bd: #e2e8f0;
-  --red: #dc2626; --red-bg: #fef2f2; --red-bd: #fecaca;
-  --yel: #d97706; --yel-bg: #fffbeb; --yel-bd: #fde68a;
-  --grn: #16a34a; --grn-bg: #f0fdf4; --grn-bd: #bbf7d0;
-  --sh: 0 1px 3px rgba(0,0,0,.08); --sh2: 0 2px 8px rgba(0,0,0,.10); --r: 10px;
+:root{
+  --sb:#1e2235; --sb-t:#94a3b8; --sb-act:rgba(229,62,109,.15); --sb-act-t:#e53e6d;
+  --sb-hov:rgba(255,255,255,.05); --brand:#e53e6d;
+  --bg:#f0f3f9; --card:#ffffff; --tp:#1a1f36; --ts:#64748b; --tm:#94a3b8;
+  --bd:#e2e8f0;
+  --red:#dc2626; --red-bg:#fef2f2; --red-bd:#fecaca;
+  --yel:#d97706; --yel-bg:#fffbeb; --yel-bd:#fde68a;
+  --grn:#16a34a; --grn-bg:#f0fdf4; --grn-bd:#bbf7d0;
+  --pend:#7c3aed; --pend-bg:#f5f3ff; --pend-bd:#ddd6fe;
+  --sh:0 1px 3px rgba(0,0,0,.08); --sh2:0 2px 8px rgba(0,0,0,.10); --r:10px;
 }
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0f1117;--card:#1a1f2e;--tp:#e2e8f0;--ts:#94a3b8;--tm:#64748b;--bd:#2d3548;
-  --red-bg:#1f1010;--red-bd:#7f1d1d;--yel-bg:#1c1610;--yel-bd:#78350f;--grn-bg:#0d1f12;
+  --red-bg:#1f1010;--red-bd:#7f1d1d;--yel-bg:#1c1610;--yel-bd:#78350f;--grn-bg:#0d1f12;--grn-bd:#14532d;
+  --pend-bg:#17132a;--pend-bd:#4c1d95;--pend:#a78bfa;
   --sh:0 1px 3px rgba(0,0,0,.3);--sh2:0 2px 8px rgba(0,0,0,.4);
 }}
 :root[data-theme="dark"]{
   --bg:#0f1117;--card:#1a1f2e;--tp:#e2e8f0;--ts:#94a3b8;--tm:#64748b;--bd:#2d3548;
-  --red-bg:#1f1010;--red-bd:#7f1d1d;--yel-bg:#1c1610;--yel-bd:#78350f;--grn-bg:#0d1f12;
+  --red-bg:#1f1010;--red-bd:#7f1d1d;--yel-bg:#1c1610;--yel-bd:#78350f;--grn-bg:#0d1f12;--grn-bd:#14532d;
+  --pend-bg:#17132a;--pend-bd:#4c1d95;--pend:#a78bfa;
   --sh:0 1px 3px rgba(0,0,0,.3);--sh2:0 2px 8px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -75,10 +78,6 @@ html,body{min-height:100%;font-family:'Noto Sans TC',system-ui,sans-serif;backgr
 .sp.sm{font-size:11px;padding:3px 8px}
 .sp.sm.on::before{content:'✓ '}
 .scope-sep{width:1px;height:14px;background:var(--bd);flex-shrink:0;margin:0 2px}
-.scope-fav{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding-top:7px;margin-top:7px;border-top:1px solid var(--bd)}
-.sp.fav{border-style:dashed}
-.sp.fav:hover{border-style:solid}
-.sp.fav.on{border-style:solid}
 .scope-now{margin-left:auto;font-size:12px;color:var(--brand);font-weight:700;background:var(--red-bg);border:1px solid var(--red-bd);border-radius:999px;padding:3px 12px;white-space:nowrap}
 
 /* ── KPI ── */
@@ -90,6 +89,11 @@ html,body{min-height:100%;font-family:'Noto Sans TC',system-ui,sans-serif;backgr
 .kc.r{border-top:3px solid var(--red)}.kc.r .kv{color:var(--red)}
 .kc.y{border-top:3px solid var(--yel)}.kc.y .kv{color:var(--yel)}
 .kc.g{border-top:3px solid var(--grn)}.kc.g .kv{color:var(--grn)}
+.kc.p{border-top:3px solid var(--pend)}.kc.p .kv{color:var(--pend)}
+.kc.click{cursor:pointer;transition:box-shadow .15s}
+.kc.click:hover{box-shadow:var(--sh2)}
+.kc.sel{outline:2px solid var(--brand);outline-offset:-1px}
+.kc .kk{font-size:10px;color:var(--tm);margin-top:3px}
 
 /* ── TABS ── */
 .tabs{display:flex;gap:2px;background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:3px;margin-bottom:14px;flex-wrap:wrap}
@@ -98,27 +102,32 @@ html,body{min-height:100%;font-family:'Noto Sans TC',system-ui,sans-serif;backgr
 .tb.on{background:var(--card);color:var(--tp);box-shadow:var(--sh)}
 
 /* ── SECTION HDR ── */
-.sh2{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sh2{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
 .st{font-size:14px;font-weight:700}
 .sc{font-size:11px;color:var(--tm);background:var(--bg);border:1px solid var(--bd);border-radius:999px;padding:1px 8px}
 
 /* ── ALERT CARDS ── */
-.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:11px}
+.ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px}
 .ac{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:13px 15px;box-shadow:var(--sh);border-left:4px solid var(--bd)}
 .ac.r{border-left-color:var(--red);background:var(--red-bg)}
 .ac.y{border-left-color:var(--yel);background:var(--yel-bg)}
-.ach{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px}
+.ac.p{border-left-color:var(--pend);background:var(--pend-bg)}
+.ach{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;gap:8px}
 .an{font-size:14px;font-weight:700}
 .ar{font-size:11px;color:var(--tm)}
-.ab{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px}
+.ab{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;white-space:nowrap}
 .ab.r{background:var(--red);color:#fff}
 .ab.y{background:var(--yel);color:#fff}
+.ab.p{background:var(--pend);color:#fff}
 .at{font-size:11px;color:var(--ts);margin-bottom:5px}
 .ad{font-size:12px;color:var(--ts);line-height:1.6}
 .am{margin-top:9px;display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tm);flex-wrap:wrap}
 .amt{background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:1px 6px}
 .amt.fac{background:var(--sb);color:#94a3b8;border-color:transparent;font-weight:600}
 .amt.bed{background:var(--brand);color:#fff;border-color:transparent;font-weight:600;font-variant-numeric:tabular-nums}
+.amt.vip{background:#fff7ed;color:#ea580c;border-color:#fed7aa;font-weight:700}
+.amt.new{background:#eef2ff;color:#4f46e5;border-color:#c7d2fe;font-weight:700}
+.amt.multi{background:var(--red);color:#fff;border-color:transparent;font-weight:700}
 
 /* ── TABLE ── */
 .tw{overflow-x:auto;border-radius:var(--r);border:1px solid var(--bd)}
@@ -133,62 +142,63 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
 .pill.r{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
 .pill.y{background:var(--yel-bg);color:var(--yel);border:1px solid var(--yel-bd)}
 .pill.g{background:var(--grn-bg);color:var(--grn);border:1px solid var(--grn-bd)}
+.pill.p{background:var(--pend-bg);color:var(--pend);border:1px solid var(--pend-bd)}
 
 /* ── PANELS ── */
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .panel{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
-.panel-h{padding:11px 15px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between}
+.panel-h{padding:11px 15px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:8px}
 .panel-t{font-size:13px;font-weight:700}
-.prow{display:flex;align-items:center;gap:10px;padding:9px 15px;border-bottom:1px solid var(--bd);font-size:13px}
-.prow:last-child{border-bottom:none}
-.prow.link{cursor:pointer;transition:background .12s}
-.prow.link:hover{background:rgba(229,62,109,.04)}
-.prow.link:hover .prn{color:var(--brand)}
-.prn{font-weight:500;flex:1}
-.prm{font-size:11px;color:var(--tm)}
 .prow-empty{display:none;padding:16px 15px;text-align:center;color:var(--tm);font-size:12px}
-
-/* ── EMPTY STATE ── */
-.no-alert{display:none;padding:28px 20px;text-align:center;color:var(--tm);font-size:13px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);margin-top:0}
+.no-alert{display:none;padding:28px 20px;text-align:center;color:var(--tm);font-size:13px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r)}
 .no-alert-icon{font-size:28px;margin-bottom:8px}
 
-/* ── WAR ROOM 一頁式左右對照儀表板 ── */
+/* ── WAR ROOM ── */
 .war-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:10px 16px;margin-bottom:14px;box-shadow:var(--sh);flex-wrap:wrap}
 .war-stats{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
 .wstat{font-size:12px;color:var(--ts);display:flex;align-items:baseline;gap:5px}
 .wstat b{font-size:20px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--tp)}
-.wstat.r b{color:var(--red)}.wstat.y b{color:var(--yel)}.wstat.o b{color:#c026d3}
+.wstat.r b{color:var(--red)}.wstat.y b{color:var(--yel)}.wstat.m b{color:var(--red)}.wstat.p b{color:var(--pend)}
 .war-right{display:flex;align-items:center;gap:10px}
 .war-search{border:1px solid var(--bd);border-radius:999px;padding:6px 14px;font-size:12px;font-family:inherit;background:var(--bg);color:var(--tp);width:190px;outline:none}
 .war-search:focus{border-color:var(--brand)}
 .war-upd{font-size:11px;color:var(--tm);white-space:nowrap}
 .war-grid{display:grid;grid-template-columns:1fr 340px;gap:14px;align-items:start}
-.war-side{position:sticky;top:118px}
-#db-matrix{font-size:12px;min-width:640px}
-#db-matrix th{padding:8px 8px;text-align:center;white-space:nowrap}
+.war-side{display:flex;flex-direction:column;gap:14px}
+@media(min-width:901px){.war-side{position:sticky;top:118px}}
+#db-matrix{font-size:12px;min-width:620px}
+#db-matrix th{padding:8px 7px;text-align:center;white-space:nowrap}
 #db-matrix th:first-child{text-align:left}
-#db-matrix td{padding:5px 8px;text-align:center;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--bd)}
+#db-matrix td{padding:5px 7px;text-align:center;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--bd)}
 #db-matrix td:first-child{text-align:left;font-weight:600;white-space:nowrap}
+.mx-zone td{background:var(--bg);font-size:10px;letter-spacing:.08em;color:var(--tm);font-weight:700;text-transform:uppercase;padding:4px 7px!important;text-align:left!important}
 .mx-row:hover{background:rgba(229,62,109,.05)}
+.mx-total td{background:rgba(229,62,109,.10);font-weight:700}
+.mx-total td:first-child{color:var(--brand)}
+.mx-sup td{background:rgba(229,62,109,.14);font-weight:700;border-top:2px solid var(--brand)}
+.mx-sup td:first-child{color:var(--brand)}
+.mx-floor td{background:rgba(229,62,109,.05);font-weight:700}
+.mx-floor td:first-child{color:var(--tp)}
+.sp.fav{border-style:dashed}.sp.fav:hover{border-style:solid}.sp.fav.on{border-style:solid}
 .mx-cell{display:inline-block;min-width:22px;padding:2px 0;border-radius:5px;cursor:pointer}
 .mx-cell.r{background:var(--red);color:#fff;font-weight:700}
 .mx-cell.y{background:var(--yel);color:#fff;font-weight:700}
+.mx-cell.p{background:var(--pend);color:#fff;font-weight:700}
 .mx-cell.z{color:var(--bd);cursor:default}
 .mx-name{cursor:pointer}
 .mx-name:hover{color:var(--brand)}
-.mx-dot{display:inline-block;width:10px;height:10px;border-radius:50%}
+.mx-dot{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle}
 .mx-dot.r{background:var(--red)}.mx-dot.y{background:var(--yel)}.mx-dot.g{background:var(--grn)}
 .mx-sum{font-weight:700;cursor:pointer}
 .mx-sum.r{color:var(--red)}.mx-sum.y{color:var(--yel)}
-.sud{display:flex;align-items:center;gap:9px;padding:8px 14px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
-.sud:last-child{border-bottom:none}
-.sud:hover{background:rgba(229,62,109,.04)}
-.sud-b{flex-shrink:0;width:9px;height:9px;border-radius:50%}
-.sud-b.r{background:var(--red)}.sud-b.y{background:var(--yel)}
-.sud-l{flex:1;min-width:0}
-.sud-n{font-size:13px;font-weight:600}
-.sud-n small{color:var(--tm);font-weight:400;font-size:11px}
-.sud-m{font-size:11px;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lst{display:flex;align-items:center;gap:9px;padding:8px 14px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
+.lst:last-child{border-bottom:none}
+.lst:hover{background:rgba(229,62,109,.04)}
+.lst-b{flex-shrink:0;width:9px;height:9px;border-radius:50%}
+.lst-b.r{background:var(--red)}.lst-b.y{background:var(--yel)}.lst-b.p{background:var(--pend)}
+.lst-l{flex:1;min-width:0}
+.lst-n{font-size:13px;font-weight:600}
+.lst-n small{color:var(--tm);font-weight:400;font-size:11px}
+.lst-m{font-size:11px;color:var(--tm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .todo{display:flex;align-items:flex-start;gap:9px;padding:8px 14px;border-bottom:1px solid var(--bd)}
 .todo:last-child{border-bottom:none}
 .todo input{width:15px;height:15px;flex-shrink:0;margin-top:2px;accent-color:var(--brand);cursor:pointer}
@@ -197,29 +207,36 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
 .todo.done .todo-t{text-decoration:line-through;color:var(--tm)}
 .todo-m{font-size:11px;color:var(--tm);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .tag{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px}
-.tag.med{background:#eff6ff;color:#2563eb}
-.tag.adm{background:#f5f3ff;color:#7c3aed}
-.tag.rep{background:#fff7ed;color:#ea580c}
-.tag.over{background:var(--red);color:#fff}
+.tag.med{background:#eff6ff;color:#2563eb}.tag.adm{background:#f5f3ff;color:#7c3aed}.tag.rep{background:#fff7ed;color:#ea580c}.tag.over{background:var(--red);color:#fff}
 @media(max-width:900px){.war-grid{grid-template-columns:1fr}.war-side{position:static}}
-
-
-/* ── MINI STAT PANELS ── */
-.msp{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:9px;margin-top:18px}
-.msp .panel{cursor:pointer;transition:box-shadow .15s}
-.msp .panel:hover{box-shadow:var(--sh2)}
-.msp .panel-inner{padding:13px 15px}
-.msp .ml{font-size:11px;color:var(--tm);margin-bottom:3px}
-.msp .mv{font-size:20px;font-weight:700;margin:3px 0}
-.msp .mc{font-size:11px;color:var(--tm)}
 
 /* ── PAGE / SUB VIEW TOGGLE ── */
 .pv{display:none}.pv.on{display:block}
 .sv{display:none}.sv.on{display:block}
 
+/* ── RULES MODULE ── */
+.rule-wrap{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:start}
+.rule-toc{position:sticky;top:120px;font-size:13px;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:10px;box-shadow:var(--sh)}
+.rule-toc a{display:block;padding:5px 9px;border-radius:6px;color:var(--ts);text-decoration:none}
+.rule-toc a:hover{background:var(--bg);color:var(--brand)}
+.rule-main{min-width:0;display:flex;flex-direction:column;gap:24px}
+.rsec{scroll-margin-top:124px}
+.rsec h3{font-size:16px;font-weight:700;margin-bottom:4px;display:flex;align-items:baseline;gap:8px}
+.rsec h3 .rno{font-size:12px;color:var(--brand);font-weight:700}
+.rsec .rlead{color:var(--ts);font-size:12.5px;margin-bottom:10px;line-height:1.7}
+.rsec h4{font-size:13px;margin:14px 0 6px;color:var(--tp)}
+.rsec p{font-size:12.5px;color:var(--ts);line-height:1.7;margin-bottom:8px}
+.rsec ul{margin:0 0 8px;padding-left:1.3em;font-size:12.5px;color:var(--ts);line-height:1.7}
+.rsec ul li{margin:2px 0}
+.rsec table{font-size:12.5px}
+.rsec td,.rsec th{padding:7px 11px}
+.note{background:var(--yel-bg);border:1px solid var(--yel-bd);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--ts);margin-top:8px}
+.tagq{font-size:10px;font-weight:700;color:var(--yel);border:1px solid var(--yel-bd);border-radius:4px;padding:0 5px;margin-left:5px}
+.n{font-variant-numeric:tabular-nums}
+@media(max-width:820px){.rule-wrap{grid-template-columns:1fr}.rule-toc{position:static}.rule-toc{display:flex;flex-wrap:wrap;gap:4px}.rule-toc a{border:1px solid var(--bd);padding:3px 8px}}
+
 /* ── RESPONSIVE ── */
 @media(max-width:640px){
-  /* 窄畫面預設收合成窄欄，可用 ☰ 展開 */
   #main{margin-left:58px}
   #sidebar{width:58px;min-width:58px}
   #sidebar .sb-logo>div,#sidebar .sb-sec,#sidebar .sb-foot{display:none}
@@ -234,70 +251,51 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
   .pc{padding:14px}
   .kpi{gap:7px}.kc{min-width:95px;padding:9px 11px}.kv{font-size:20px}
   .ag{grid-template-columns:1fr}
-  .two{grid-template-columns:1fr}
   #scope-bar{padding:7px 14px}
 }
 </style>
 
 <div id="app">
-  <!-- SIDEBAR -->
   <nav id="sidebar">
     <div class="sb-logo">
       <div class="sb-icon">🏥</div>
-      <div>
-        <div class="sb-org">清福集團</div>
-        <div class="sb-sub">住民異常戰情管制</div>
-      </div>
+      <div><div class="sb-org">清福集團</div><div class="sb-sub">住民異常戰情管制</div></div>
     </div>
-
     <div class="sb-sec">主要模組</div>
     <div class="nav on" data-page="dashboard" onclick="go(this)"><span class="ni">📊</span>示警儀表板</div>
-    <div class="nav" data-page="resident" onclick="go(this)"><span class="ni">⚠️</span>住民異常<span class="nb" data-count-sel=".ac" data-count-root="#pv-resident">11</span></div>
-    <div class="nav" data-page="vip" onclick="go(this)"><span class="ni">⭐</span>VIP及新入住民<span class="nb y" data-count-sel=".ac" data-count-root="#pv-vip">7</span></div>
-    <div class="nav" data-page="outpatient" onclick="go(this)"><span class="ni">🏨</span>門診就醫異常<span class="nb" data-count-sel=".ac" data-count-root="#pv-outpatient">3</span></div>
-    <div class="nav" data-page="staff" onclick="go(this)"><span class="ni">👥</span>員工管理<span class="nb y" data-count-sel=".ac" data-count-root="#pv-staff">1</span></div>
-    <div class="sb-sec">系統</div>
+    <div class="nav" data-page="resident" onclick="go(this)"><span class="ni">⚠️</span>住民異常<span class="nb" id="nb-resident">0</span></div>
+    <div class="nav" data-page="vip" onclick="go(this)"><span class="ni">⭐</span>VIP及新入住民<span class="nb y" id="nb-vip">0</span></div>
+    <div class="nav" data-page="staff" onclick="go(this)"><span class="ni">👥</span>員工管理<span class="nb y" id="nb-staff">0</span></div>
+    <div class="sb-sec">規則與系統</div>
+    <div class="nav" data-page="rules" onclick="go(this)"><span class="ni">📖</span>收錄規則</div>
     <div class="nav" data-page="admin" onclick="go(this)"><span class="ni">⚙️</span>管理者頁面</div>
-
-    <div class="sb-foot">
-      <div>最後更新</div>
-      <div id="upd" style="color:#cbd5e1;margin-top:2px"></div>
-    </div>
+    <div class="sb-foot"><div>最後更新</div><div id="upd" style="color:#cbd5e1;margin-top:2px"></div></div>
   </nav>
 
-  <!-- MAIN -->
   <div id="main">
-    <!-- PAGE HEADER -->
     <div class="ph">
       <button class="sb-toggle" onclick="toggleSidebar()" title="收合／展開側邊欄">☰</button>
-      <div>
-        <div class="pt" id="hd-t">示警儀表板</div>
-        <div class="ps" id="hd-s">全院異常事件即時概覽</div>
-      </div>
-      <div class="ph-r">
-        <span class="demo-tag">📋 示範資料</span>
-        <div class="dbadge" id="hd-d"></div>
-      </div>
+      <div><div class="pt" id="hd-t">示警儀表板</div><div class="ps" id="hd-s">全院異常事件即時概覽</div></div>
+      <div class="ph-r"><span class="demo-tag">📋 示範資料</span><div class="dbadge" id="hd-d"></div></div>
     </div>
 
-    <!-- SCOPE SELECTOR BAR -->
     <div id="scope-bar">
       <div class="scope-l1">
-        <span class="scope-lbl">院區</span>
-        <button class="sp on" id="sp-all" onclick="setGroup(this,'')">全院區</button>
+        <span class="scope-lbl">督導分區</span>
+        <button class="sp on" data-sup="-1" onclick="setSup(this,-1)">全院區</button>
         <div class="scope-sep"></div>
-        <button class="sp" onclick="setGroup(this,'新館')">新館</button>
-        <button class="sp" onclick="setGroup(this,'本館')">本館</button>
+        <button class="sp" data-sup="0" onclick="setSup(this,0)">新館整體</button>
+        <button class="sp" data-sup="1" onclick="setSup(this,1)">本館 8F＋7F＋6F</button>
+        <button class="sp" data-sup="2" onclick="setSup(this,2)">本館 5F＋3F＋護理之家</button>
         <span class="scope-now" id="scope-now">目前範圍：全院區</span>
       </div>
-      <div class="scope-fav">
-        <span class="scope-lbl">常用</span>
-        <button class="sp sm fav" data-facs="清福,清春,清山" onclick="pickPreset(['清福','清春','清山'])">8F·福春山</button>
-        <button class="sp sm fav" data-facs="清氣,清日,清泉" onclick="pickPreset(['清氣','清日','清泉'])">7F·氣日泉</button>
-        <button class="sp sm fav" data-facs="清心,清照,清水" onclick="pickPreset(['清心','清照','清水'])">6F·心照水</button>
-        <button class="sp sm fav" data-facs="清平,清風,清清" onclick="pickPreset(['清平','清風','清清'])">5F·平風清</button>
-        <button class="sp sm fav" data-facs="清安,清景,清涼" onclick="pickPreset(['清安','清景','清涼'])">3F·安景涼</button>
-        <button class="sp sm fav" data-facs="護理之家" onclick="pickPreset(['護理之家'])">護理之家</button>
+      <div class="scope-l2" id="scope-fav">
+        <span class="scope-lbl">常用<span class="scope-hint"> · 本館樓層</span></span>
+        <button class="sp sm fav" data-facs="清福,清春,清山" onclick="pickPreset(['清福','清春','清山'],'8F')">8F·福春山</button>
+        <button class="sp sm fav" data-facs="清氣,清日,清泉" onclick="pickPreset(['清氣','清日','清泉'],'7F')">7F·氣日泉</button>
+        <button class="sp sm fav" data-facs="清心,清照,清水" onclick="pickPreset(['清心','清照','清水'],'6F')">6F·心照水</button>
+        <button class="sp sm fav" data-facs="清平,清風,清清" onclick="pickPreset(['清平','清風','清清'],'5F')">5F·平風清</button>
+        <button class="sp sm fav" data-facs="清安,清景,清涼" onclick="pickPreset(['清安','清景','清涼'],'3F')">3F·安景涼</button>
       </div>
       <div class="scope-l2" id="scope-l2" style="display:none">
         <span class="scope-lbl">機構<span class="scope-hint"> · 可複選</span></span>
@@ -310,38 +308,41 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
 
       <!-- ══ 示警儀表板 ══ -->
       <div class="pv on" id="pv-dashboard">
-        <div class="war-bar">
-          <div class="war-stats">
-            <span class="wstat r"><b id="db-c-red">11</b> 紅燈</span>
-            <span class="wstat y"><b id="db-c-yel">11</b> 黃燈</span>
-            <span class="wstat"><b id="db-c-todo">7</b> 待辦</span>
-            <span class="wstat o"><b id="db-c-over">2</b> 逾期</span>
-          </div>
-          <div class="war-right">
+        <div class="kpi" id="db-kpi"></div>
+        <div class="war-bar" style="padding:8px 14px;margin-bottom:14px">
+          <span style="font-size:11px;color:var(--tm)">點上方任一燈號卡 → 住民異常該燈號名單</span>
+          <div class="war-right" style="margin-left:auto">
             <input id="db-search" class="war-search" placeholder="🔍 搜尋姓名 / 床號…" oninput="filterSudden()">
             <span class="war-upd" id="db-upd2"></span>
           </div>
         </div>
-
         <div class="war-grid">
           <div class="war-main">
             <div class="panel">
-              <div class="panel-h"><div class="panel-t">📋 示警總表</div><span style="font-size:11px;color:var(--tm)">燈號＝機構列管數（≥6🔴 3–5🟡 ≤2🟢）· 點任一數值看該案</span></div>
+              <div class="panel-h"><div class="panel-t">📋 示警總表</div><span style="font-size:11px;color:var(--tm)">👁 督導管理整體 → 樓層分區 → 清X機構，各層依床數門檻判燈 · 點數值看該案</span></div>
               <div class="tw" style="border:none;border-radius:0">
                 <table id="db-matrix"><thead id="db-matrix-head"></thead><tbody id="db-matrix-body"></tbody></table>
               </div>
-              <div class="no-alert" id="db-no-alert" style="border:none;margin:0">
-                <div class="no-alert-icon">✅</div>此範圍目前無任何示警
-              </div>
+              <div class="no-alert" id="db-no-alert" style="border:none;margin:0"><div class="no-alert-icon">✅</div>此範圍目前無任何示警</div>
             </div>
           </div>
           <div class="war-side">
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t">🔴 多重異常住民</div><span style="font-size:11px;color:var(--tm)"><b id="db-multi-count">0</b> 位</span></div>
+              <div id="db-multi"></div>
+              <div class="prow-empty" id="db-multi-empty">此範圍無多重異常住民</div>
+            </div>
             <div class="panel">
               <div class="panel-h"><div class="panel-t">🆕 今日新增管制</div><span style="font-size:11px;color:var(--tm)"><b id="db-sud-count">0</b> 位</span></div>
               <div id="db-sudden"></div>
               <div class="prow-empty" id="db-sudden-empty">今日此範圍無新增管制</div>
             </div>
-            <div class="panel" style="margin-top:14px">
+            <div class="panel">
+              <div class="panel-h"><div class="panel-t">🟣 待人工確認</div><span style="font-size:11px;color:var(--tm)">24h 內處理 · <b id="db-pend-count">0</b> 筆</span></div>
+              <div id="db-pend"></div>
+              <div class="prow-empty" id="db-pend-empty">此範圍無待確認紀錄</div>
+            </div>
+            <div class="panel">
               <div class="panel-h"><div class="panel-t">📋 待辦追蹤</div><span style="font-size:11px;color:var(--tm)">完成 <b id="db-todo-done">0</b>／<b id="db-todo-all">0</b></span></div>
               <div id="db-todo"></div>
               <div class="prow-empty" id="db-todo-empty">此範圍目前無待辦</div>
@@ -352,205 +353,68 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
 
       <!-- ══ 住民異常 ══ -->
       <div class="pv" id="pv-resident">
-        <div class="kpi">
-          <div class="kc r"><div class="kl">🔴 紅燈</div><div class="kv"><span data-count-sel=".ac.r" data-count-root="#pv-resident">6</span><span class="ku">件</span></div></div>
-          <div class="kc y"><div class="kl">🟡 黃燈</div><div class="kv"><span data-count-sel=".ac.y" data-count-root="#pv-resident">5</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">皮膚異常</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-resident-skin">4</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">行為異常</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-resident-behavior">2</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">反覆性住院</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-resident-hosp">2</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">反覆性跌倒</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-resident-fall">2</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">家屬爭議</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-resident-family">1</span><span class="ku">件</span></div></div>
-        </div>
-        <div class="tabs">
-          <button class="tb on" data-tab="skin" onclick="tab(this,'resident','skin')">皮膚異常</button>
-          <button class="tb" data-tab="behavior" onclick="tab(this,'resident','behavior')">行為異常</button>
-          <button class="tb" data-tab="hosp" onclick="tab(this,'resident','hosp')">反覆性住院</button>
-          <button class="tb" data-tab="fall" onclick="tab(this,'resident','fall')">反覆性跌倒</button>
-          <button class="tb" data-tab="family" onclick="tab(this,'resident','family')">家屬爭議</button>
-        </div>
-
-        <div class="sv on" id="sv-resident-skin">
-          <div class="sh2"><div class="st">皮膚異常</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-resident-skin">4</span> 件</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="清福"><div class="ach"><div><div class="an">林美蘭</div><div class="ar">責護：李曉芳</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">第3度壓傷｜薦骨部位｜發現：2026-09-18</div><div class="ad">薦骨7×5cm壓傷，已通報醫師，傷口護理每日2次，家屬已告知，待傷口科會診。</div><div class="am"><span class="amt fac">清福</span><span class="amt bed">C503-2</span><span class="amt">距發現4天</span><span class="amt">傷口護理中</span></div></div>
-            <div class="ac r" data-fac="一館"><div class="ach"><div><div class="an">周文山</div><div class="ar">責護：林靜宜</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">第3度壓傷｜坐骨部位｜發現：2026-09-15</div><div class="ad">坐骨壓傷10×8cm深層組織受損，傷口科持續追蹤，已召開家屬說明會，評估住院治療可行性。</div><div class="am"><span class="amt fac">一館</span><span class="amt bed">A210-1</span><span class="amt">距發現7天</span><span class="amt">家屬知情</span></div></div>
-            <div class="ac y" data-fac="清春"><div class="ach"><div><div class="an">陳碧霞</div><div class="ar">責護：王明華</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">第1度壓傷｜腳踝部位｜發現：2026-09-20</div><div class="ad">腳踝3×2cm發紅，加強翻身頻率每2小時一次，使用減壓墊，持續追蹤中。</div><div class="am"><span class="amt fac">清春</span><span class="amt bed">C412-3</span><span class="amt">距發現2天</span><span class="amt">追蹤中</span></div></div>
-            <div class="ac y" data-fac="二館" data-new="1"><div class="ach"><div><div class="an">蔡淑珍</div><div class="ar">責護：吳佩玲</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">第2度壓傷｜肘部｜發現：2026-09-19</div><div class="ad">右肘水泡已處理，傷口敷料每日更換，評估是否需傷口護理師介入。</div><div class="am"><span class="amt fac">二館</span><span class="amt bed">A611-2</span><span class="amt">距發現3天</span><span class="amt">敷料更換中</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無皮膚異常示警</div>
-        </div>
-
-        <div class="sv" id="sv-resident-behavior">
-          <div class="sh2"><div class="st">行為異常</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-resident-behavior">2</span> 件</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="三館"><div class="ach"><div><div class="an">陳志明</div><div class="ar">責護：蔡欣儀</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">攻擊行為｜連續發生｜記錄：2026-09-19</div><div class="ad">本週3次攻擊照護人員，抓傷手臂，已通報精神科醫師評估藥物調整，安排家屬說明會。</div><div class="am"><span class="amt fac">三館</span><span class="amt bed">A308-1</span><span class="amt">本週3次</span><span class="amt">精神科評估中</span></div></div>
-            <div class="ac y" data-fac="清山"><div class="ach"><div><div class="an">吳淑惠</div><div class="ar">責護：林書雨</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">拒食｜連續3天｜記錄：2026-09-20</div><div class="ad">連續3天拒食，僅攝取少量流質，體重下降1.2kg，已通報醫師及營養師評估。</div><div class="am"><span class="amt fac">清山</span><span class="amt bed">C802-4</span><span class="amt">連續3天</span><span class="amt">醫師評估中</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無行為異常示警</div>
-        </div>
-
-        <div class="sv" id="sv-resident-hosp">
-          <div class="sh2"><div class="st">反覆性住院</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-resident-hosp">2</span> 件</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="一館"><div class="ach"><div><div class="an">王大德</div><div class="ar">責護：黃淑芬</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">90天內第2次住院｜最近返回：2026-09-10</div><div class="ad">因肺炎再次住院，90天內第2次。已轉介胸腔科持續追蹤，評估慢性肺炎預防計畫。</div><div class="am"><span class="amt fac">一館</span><span class="amt bed">A605-2</span><span class="amt">90天第2次</span><span class="amt">胸腔科追蹤</span></div></div>
-            <div class="ac y" data-fac="二館"><div class="ach"><div><div class="an">鄭麗月</div><div class="ar">責護：林美君</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">180天內第2次住院｜最近返回：2026-09-05</div><div class="ad">因泌尿道感染住院，返回後持續追蹤尿液檢查，評估水分攝取計畫，個管師介入協調。</div><div class="am"><span class="amt fac">二館</span><span class="amt bed">A403-1</span><span class="amt">180天第2次</span><span class="amt">感染管制追蹤</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無反覆住院示警</div>
-        </div>
-
-        <div class="sv" id="sv-resident-fall">
-          <div class="sh2"><div class="st">反覆性跌倒</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-resident-fall">2</span> 件</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="三館"><div class="ach"><div><div class="an">張建宏</div><div class="ar">責護：楊淑芳</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">本月第3次跌倒｜最近：2026-09-21</div><div class="ad">本月3次跌倒（9/5、9/13、9/21），最近右膝挫傷。已召開照護會議，評估床欄、夜間陪伴及髖部保護器。</div><div class="am"><span class="amt fac">三館</span><span class="amt bed">A306-3</span><span class="amt">本月3次</span><span class="amt">照護會議已召開</span></div></div>
-            <div class="ac y" data-fac="清氣"><div class="ach"><div><div class="an">謝秀蘭</div><div class="ar">責護：余秀鳳</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">90天內第2次跌倒｜最近：2026-09-18</div><div class="ad">90天內第2次跌倒，無明顯外傷。已重新評估跌倒風險（Morse量表），調整房間動線及照明。</div><div class="am"><span class="amt fac">清氣</span><span class="amt bed">C502-1</span><span class="amt">90天第2次</span><span class="amt">環境評估中</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無反覆跌倒示警</div>
-        </div>
-
-        <div class="sv" id="sv-resident-family">
-          <div class="sh2"><div class="st">家屬爭議</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-resident-family">1</span> 件</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="護理之家"><div class="ach"><div><div class="an">黃秀芬</div><div class="ar">責護：葉宜臻</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">家屬投訴照護疏失｜提出：2026-09-19</div><div class="ad">家屬（兒子）投訴夜班照護不足，認為壓傷係照護疏失造成。已安排護理長說明會（09/23 10:00），社工介入協調，事件記錄保全。</div><div class="am"><span class="amt fac">護理之家</span><span class="amt bed">D710-2</span><span class="amt">社工介入</span><span class="amt">說明會：09/23</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無家屬爭議示警</div>
-        </div>
+        <div class="kpi" id="res-kpi"></div>
+        <div class="tabs" id="res-tabs"></div>
+        <div id="res-body"></div>
       </div>
 
       <!-- ══ VIP及新入住民 ══ -->
       <div class="pv" id="pv-vip">
-        <div class="kpi">
-          <div class="kc r"><div class="kl">🔴 紅燈</div><div class="kv"><span data-count-sel=".ac.r" data-count-root="#pv-vip">3</span><span class="ku">件</span></div></div>
-          <div class="kc y"><div class="kl">🟡 黃燈</div><div class="kv"><span data-count-sel=".ac.y" data-count-root="#pv-vip">4</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">VIP名單總數</div><div class="kv">12<span class="ku">人</span></div></div>
-          <div class="kc"><div class="kl">有動態VIP</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-vip-viplist">4</span><span class="ku">人</span></div></div>
-          <div class="kc"><div class="kl">新入住民異常</div><div class="kv"><span data-count-sel=".ac" data-count-root="#sv-vip-newres">3</span><span class="ku">件</span></div></div>
-        </div>
-        <div class="tabs">
-          <button class="tb on" data-tab="viplist" onclick="tab(this,'vip','viplist')">VIP動態</button>
-          <button class="tb" data-tab="newres" onclick="tab(this,'vip','newres')">新入住民異常</button>
-        </div>
-
-        <div class="sv on" id="sv-vip-viplist">
-          <div class="sh2"><div class="st">VIP個案動態</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-vip-viplist">4</span> 人有動態</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="護理之家"><div class="ach"><div><div class="an">劉正男 ⭐</div><div class="ar">主責：陳淑真護理師</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">住院｜2026-09-20 急診轉入</div><div class="ad">肺炎急性惡化，急診住院中。已緊急聯絡家屬到院，主治醫師更新病況，個管師持續追蹤。</div><div class="am"><span class="amt fac">護理之家</span><span class="amt bed">D201-1</span><span class="amt">住院中</span><span class="amt">家屬已告知</span></div></div>
-            <div class="ac r" data-fac="護理之家" data-new="1"><div class="ach"><div><div class="an">林金城 ⭐</div><div class="ar">主責：蔡明慧護理師</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">轉出｜2026-09-22 轉台大醫院</div><div class="ad">因心臟手術轉至台大醫院，已完成轉院文件，家屬全程陪同，預計術後1週返回。</div><div class="am"><span class="amt fac">護理之家</span><span class="amt bed">D108-3</span><span class="amt">轉出中</span><span class="amt">預計回院：09/29</span></div></div>
-            <div class="ac y" data-fac="護理之家"><div class="ach"><div><div class="an">許雅婷 ⭐</div><div class="ar">主責：蔡明慧護理師</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">皮膚異常｜2026-09-21 發現</div><div class="ad">第1度壓傷（足跟），已加強翻身頻率，使用氣墊床，即時通知家屬，每日照片回報。</div><div class="am"><span class="amt fac">護理之家</span><span class="amt bed">D205-2</span><span class="amt">每日回報</span><span class="amt">氣墊床使用中</span></div></div>
-            <div class="ac y" data-fac="清日"><div class="ach"><div><div class="an">陳光明 ⭐</div><div class="ar">主責：余佳玲護理師</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">跌倒｜2026-09-19</div><div class="ad">如廁時跌倒，無骨折，輕微右膝挫傷。已通知家屬，X光複查確認無大礙。</div><div class="am"><span class="amt fac">清日</span><span class="amt bed">C508-1</span><span class="amt">X光複查完成</span><span class="amt">家屬已告知</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無 VIP 動態示警</div>
-        </div>
-
-        <div class="sv" id="sv-vip-newres">
-          <div class="sh2"><div class="st">新入住民異常（入住14天內）</div><span class="sc"><span data-count-sel=".ac" data-count-root="#sv-vip-newres">3</span> 件</span></div>
-          <div class="ag">
-            <div class="ac r" data-fac="清泉" data-new="1"><div class="ach"><div><div class="an">楊正義 🆕</div><div class="ar">入住：2026-09-20</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">入住帶入帶狀疱疹｜2026-09-21 確認</div><div class="ad">入住第2天發現帶狀疱疹，已隔離處置，感控人員評估接觸者，皮膚科醫師會診中，家屬已告知。</div><div class="am"><span class="amt fac">清泉</span><span class="amt bed">C408-2</span><span class="amt">入住第2天</span><span class="amt">隔離中</span></div></div>
-            <div class="ac y" data-fac="清心" data-new="1"><div class="ach"><div><div class="an">趙明仁 🆕</div><div class="ar">入住：2026-09-18</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">入住3日內跌倒｜2026-09-21</div><div class="ad">如廁時跌倒，無外傷。入住適應期評估不足，已加強床欄使用及呼叫鈴指導，納入跌倒高風險名單。</div><div class="am"><span class="amt fac">清心</span><span class="amt bed">C309-1</span><span class="amt">入住第3天</span><span class="amt">高風險列管</span></div></div>
-            <div class="ac y" data-fac="清安"><div class="ach"><div><div class="an">方淑娟 🆕</div><div class="ar">入住：2026-09-15</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">拒食、情緒低落｜持續5天</div><div class="ad">入住適應困難，拒食哭泣，已轉介心理師評估，通知家屬加強探視，口服營養補充。</div><div class="am"><span class="amt fac">清安</span><span class="amt bed">C610-3</span><span class="amt">入住第7天</span><span class="amt">心理師介入</span></div></div>
-          </div>
-          <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無新入住民異常示警</div>
-        </div>
-      </div>
-
-      <!-- ══ 門診就醫異常 ══ -->
-      <div class="pv" id="pv-outpatient">
-        <div class="kpi">
-          <div class="kc r"><div class="kl">🔴 紅燈</div><div class="kv"><span data-count-sel=".ac.r" data-count-root="#pv-outpatient">1</span><span class="ku">件</span></div></div>
-          <div class="kc y"><div class="kl">🟡 黃燈</div><div class="kv"><span data-count-sel=".ac.y" data-count-root="#pv-outpatient">2</span><span class="ku">件</span></div></div>
-          <div class="kc"><div class="kl">本月門診次數</div><div class="kv">23<span class="ku">次</span></div></div>
-          <div class="kc"><div class="kl">本月就醫人次</div><div class="kv">18<span class="ku">人</span></div></div>
-        </div>
-        <div class="sh2"><div class="st">門診就醫異常示警</div><span class="sc"><span data-count-sel=".ac" data-count-root="#pv-outpatient">3</span> 件</span></div>
-        <div class="ag">
-          <div class="ac r" data-fac="清福" data-new="1"><div class="ach"><div><div class="an">林錦繡</div><div class="ar">責護：林淑貞</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">緊急就醫→住院｜2026-09-22</div><div class="ad">門診發現血糖異常（空腹420），緊急轉急診，已住院治療中。家屬聯繫完成，通知主治醫師更新病況。</div><div class="am"><span class="amt fac">清福</span><span class="amt bed">C815-1</span><span class="amt">住院中</span><span class="amt">糖尿病急症</span></div></div>
-          <div class="ac y" data-fac="二館"><div class="ach"><div><div class="an">廖明正</div><div class="ar">責護：蔡淑玲</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">本月第3次門診｜最近：2026-09-20</div><div class="ad">本月已就醫3次（慢性疼痛），醫師建議評估疼痛管理計畫，已轉介疼痛科諮詢，個管師跟進。</div><div class="am"><span class="amt fac">二館</span><span class="amt bed">A302-2</span><span class="amt">本月3次</span><span class="amt">疼痛科轉介</span></div></div>
-          <div class="ac y" data-fac="清春"><div class="ach"><div><div class="an">蘇桂花</div><div class="ar">責護：何美玲</div></div><span class="ab y">🟡 黃燈</span></div><div class="at">門診新增抗凝血劑｜2026-09-18</div><div class="ad">門診新增 Warfarin，需密切監測INR，已通知本院護理師調整給藥流程，每週INR追蹤排程已建立。</div><div class="am"><span class="amt fac">清春</span><span class="amt bed">C511-2</span><span class="amt">新增Warfarin</span><span class="amt">每週INR追蹤</span></div></div>
-        </div>
-        <div class="no-alert"><div class="no-alert-icon">✅</div>此範圍目前無門診就醫異常示警</div>
+        <div class="kpi" id="vip-kpi"></div>
+        <div class="note" style="margin-bottom:14px">VIP 與新入住民為住民<strong>身分標記</strong>，事件燈號仍依各類別規則判定，不計入多重異常的類別數。點上方卡片可切換 VIP／新入住、或只看其中紅燈。</div>
+        <div id="vip-body"></div>
       </div>
 
       <!-- ══ 員工管理 ══ -->
       <div class="pv" id="pv-staff">
-        <div class="kpi">
-          <div class="kc"><div class="kl">在職員工總數</div><div class="kv">87<span class="ku">人</span></div></div>
-          <div class="kc y"><div class="kl">🟡 試用期（未滿3月）</div><div class="kv"><span data-count-sel="tr[data-fac]" data-count-root="#sv-staff-new">9</span><span class="ku">人</span></div></div>
-          <div class="kc r"><div class="kl">🔴 試用期異常</div><div class="kv"><span data-count-sel=".ac.r" data-count-root="#pv-staff">1</span><span class="ku">件</span></div></div>
-        </div>
+        <div class="kpi" id="staff-kpi"></div>
+        <div class="note" style="margin-bottom:14px">員工管理單獨顯示，<strong>不計入機構總燈號與多重異常</strong>。到職 3 個月內依評核自動判定；超過 3 個月改由管理者手動列管。點上方黃／紅卡或表格內燈號，可列出該燈號列管名單。</div>
         <div class="tabs">
-          <button class="tb on" data-tab="new" onclick="tab(this,'staff','new')">入職未滿3個月</button>
-          <button class="tb" data-tab="all" onclick="tab(this,'staff','all')">所有員工</button>
+          <button class="tb on" data-ft="new" onclick="staffTab(this,'new')">入職未滿 3 個月</button>
+          <button class="tb" data-ft="manual" onclick="staffTab(this,'manual')">手動列管</button>
         </div>
+        <div id="staff-body"></div>
+      </div>
 
-        <div class="sv on" id="sv-staff-new">
-          <div class="ac r" data-fac="清福" style="margin-bottom:14px"><div class="ach"><div><div class="an">李品萱</div><div class="ar">照服員 · 入職21天</div></div><span class="ab r">🔴 紅燈</span></div><div class="at">出勤異常｜2026-09-18 起無故缺席</div><div class="ad">試用期員工無故缺席已連續3天，人事主管已聯絡本人及緊急聯絡人，尚未取得回應，評估離職處理流程。</div><div class="am"><span class="amt fac">清福</span><span class="amt">連續3天</span><span class="amt">人事追蹤中</span></div></div>
-          <div class="no-alert" id="staff-new-no-alert"><div class="no-alert-icon">✅</div>此範圍目前無試用期異常示警</div>
-          <div class="sh2"><div class="st">試用期員工追蹤</div><span class="sc"><span data-count-sel="tr[data-fac]" data-count-root="#sv-staff-new">9</span> 人</span></div>
-          <div class="tw"><table>
-            <thead><tr><th>姓名</th><th>部門/職務</th><th>館別</th><th>入職日</th><th>天數</th><th>示警</th></tr></thead>
-            <tbody>
-              <tr data-fac="清福"><td><strong>李品萱</strong></td><td>照服員</td><td>清福</td><td>2026-09-01</td><td>21天</td><td><span class="pill r">🔴 出勤異常</span></td></tr>
-              <tr data-fac="一館"><td><strong>洪寶珠</strong></td><td>護理師</td><td>一館</td><td>2026-09-15</td><td>7天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="三館"><td><strong>張景輝</strong></td><td>護理師</td><td>三館</td><td>2026-09-08</td><td>14天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="清福"><td><strong>林依柔</strong></td><td>行政組</td><td>清福</td><td>2026-08-15</td><td>38天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="清福"><td><strong>王振凱</strong></td><td>總務組</td><td>清福</td><td>2026-08-20</td><td>33天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="清泉"><td><strong>吳淑雯</strong></td><td>照服員</td><td>清泉</td><td>2026-07-25</td><td>59天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="護理之家"><td><strong>黃曉雯</strong></td><td>照服員</td><td>護理之家</td><td>2026-07-30</td><td>54天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="二館"><td><strong>鄭名傑</strong></td><td>照服員</td><td>二館</td><td>2026-08-01</td><td>52天</td><td><span class="pill g">正常</span></td></tr>
-              <tr data-fac="清福"><td><strong>謝欣怡</strong></td><td>社工室</td><td>清福</td><td>2026-08-10</td><td>43天</td><td><span class="pill g">正常</span></td></tr>
-            </tbody>
-          </table></div>
-        </div>
-
-        <div class="sv" id="sv-staff-all">
-          <div class="sh2"><div class="st">所有員工一覽</div><span class="sc">87 人（顯示前10筆）</span></div>
-          <div class="tw"><table>
-            <thead><tr><th>姓名</th><th>部門/職務</th><th>館別</th><th>到職日</th><th>年資</th><th>狀態</th></tr></thead>
-            <tbody>
-              <tr data-fac="護理之家"><td><strong>陳淑真</strong></td><td>護理長</td><td>護理之家</td><td>2018-03-01</td><td>8年6月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="護理之家"><td><strong>蔡明慧</strong></td><td>護理師</td><td>護理之家</td><td>2020-06-15</td><td>6年3月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="清福"><td><strong>林俊賢</strong></td><td>社工師</td><td>清福</td><td>2021-01-10</td><td>5年8月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="清福"><td><strong>石玉嬋</strong></td><td>社工師</td><td>清福</td><td>2022-07-01</td><td>4年2月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="一館"><td><strong>黃淑芬</strong></td><td>護理師</td><td>一館</td><td>2019-09-01</td><td>7年</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="二館"><td><strong>林美君</strong></td><td>護理師</td><td>二館</td><td>2023-03-20</td><td>3年6月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="清日"><td><strong>余佳玲</strong></td><td>護理師</td><td>清日</td><td>2020-11-05</td><td>5年10月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="護理之家"><td><strong>葉宜臻</strong></td><td>照服員</td><td>護理之家</td><td>2024-01-15</td><td>2年8月</td><td><span class="pill g">在職</span></td></tr>
-              <tr data-fac="清福"><td><strong>李品萱</strong></td><td>照服員</td><td>清福</td><td>2026-09-01</td><td>21天</td><td><span class="pill r">出勤異常</span></td></tr>
-              <tr data-fac="一館"><td><strong>洪寶珠</strong></td><td>護理師</td><td>一館</td><td>2026-09-15</td><td>7天</td><td><span class="pill y">試用期</span></td></tr>
-            </tbody>
-          </table></div>
+      <!-- ══ 收錄規則 ══ -->
+      <div class="pv" id="pv-rules">
+        <div class="rule-wrap">
+          <nav class="rule-toc">
+            <a href="#r-quick" onclick="return rjump('r-quick')">⚡ 燈號速查表</a>
+            <a href="#r-common" onclick="return rjump('r-common')">共用原則</a>
+            <a href="#r-skin" onclick="return rjump('r-skin')">1 皮膚異常</a>
+            <a href="#r-behavior" onclick="return rjump('r-behavior')">2 行為異常</a>
+            <a href="#r-hosp" onclick="return rjump('r-hosp')">3 住院</a>
+            <a href="#r-fall" onclick="return rjump('r-fall')">4 跌倒</a>
+            <a href="#r-family" onclick="return rjump('r-family')">5 家屬爭議</a>
+            <a href="#r-clinic" onclick="return rjump('r-clinic')">6 門診就醫</a>
+            <a href="#r-vip" onclick="return rjump('r-vip')">7 VIP 住民</a>
+            <a href="#r-newres" onclick="return rjump('r-newres')">8 新入住民</a>
+            <a href="#r-staff" onclick="return rjump('r-staff')">9 員工管理</a>
+            <a href="#r-combo" onclick="return rjump('r-combo')">複合規則</a>
+            <a href="#r-pending" onclick="return rjump('r-pending')">待審核事項</a>
+          </nav>
+          <div class="rule-main" id="rule-main"></div>
         </div>
       </div>
 
       <!-- ══ 管理者頁面 ══ -->
       <div class="pv" id="pv-admin">
         <div class="sh2" style="margin-bottom:18px"><div class="st">管理者設定</div></div>
-        <div class="two">
+        <div class="war-grid" style="grid-template-columns:1fr 1fr">
           <div class="panel">
             <div class="panel-h"><div class="panel-t">⚙️ 功能設定（第二階段）</div></div>
-            <div class="prow" style="flex-direction:column;align-items:flex-start;gap:3px"><div style="font-weight:600">示警觸發規則</div><div class="prm">紅/黃燈觸發條件、天數、次數閾值設定</div></div>
-            <div class="prow" style="flex-direction:column;align-items:flex-start;gap:3px"><div style="font-weight:600">資料來源設定</div><div class="prm">Supabase / Google Sheets 連接設定</div></div>
-            <div class="prow" style="flex-direction:column;align-items:flex-start;gap:3px"><div style="font-weight:600">VIP名單管理</div><div class="prm">新增、移除、查看 VIP 住民名單</div></div>
-            <div class="prow" style="flex-direction:column;align-items:flex-start;gap:3px"><div style="font-weight:600">通知設定</div><div class="prm">LINE 通知 / Email 通知整合</div></div>
+            <div style="padding:4px 0">
+              <div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><div style="font-weight:600">示警觸發規則</div><div style="font-size:11px;color:var(--tm)">各類燈號門檻、天數、次數閾值（目前依〈收錄規則〉V1.0）</div></div>
+              <div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><div style="font-weight:600">機構與床數設定</div><div style="font-size:11px;color:var(--tm)">各機構床數、機構總燈號門檻、本館三層燈號</div></div>
+              <div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><div style="font-weight:600">字典維護</div><div style="font-size:11px;color:var(--tm)">同義詞表、否定詞表、待人工確認字典（總部審核）</div></div>
+              <div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><div style="font-weight:600">資料來源設定</div><div style="font-size:11px;color:var(--tm)">諾雅克 uCare / Supabase / Google Sheets 連接</div></div>
+              <div style="padding:9px 15px"><div style="font-weight:600">VIP 名單管理</div><div style="font-size:11px;color:var(--tm)">集團集中管理，機構不參與提名</div></div>
+            </div>
           </div>
           <div class="panel">
-            <div class="panel-h"><div class="panel-t">📋 院區組織架構</div></div>
-            <div class="prow" style="flex-direction:column;align-items:flex-start;gap:5px">
-              <div style="display:flex;align-items:center;gap:6px">
-                <span style="font-size:11px;font-weight:700;background:#334155;color:#94a3b8;border-radius:4px;padding:2px 7px">新館</span>
-                <span style="font-size:11px;color:var(--tm)">3 機構</span>
-              </div>
-              <div style="font-size:12px;color:var(--ts)">一館・二館・三館</div>
-            </div>
-            <div class="prow" style="flex-direction:column;align-items:flex-start;gap:5px">
-              <div style="display:flex;align-items:center;gap:6px">
-                <span style="font-size:11px;font-weight:700;background:#334155;color:#94a3b8;border-radius:4px;padding:2px 7px">本館</span>
-                <span style="font-size:11px;color:var(--tm)">16 機構</span>
-              </div>
-              <div style="font-size:12px;color:var(--ts)">護理之家・清福・清春・清山・清氣・清日・清泉・清心・清照・清水・清平・清風・清清・清安・清景・清涼</div>
-            </div>
-            <div class="prow"><span class="prn" style="color:var(--tm)">版本</span><span>v2.2 本館常用機構可複選疊加</span></div>
-            <div class="prow"><span class="prn" style="color:var(--tm)">資料模式</span><span class="pill y">示範假資料</span></div>
-            <div class="prow"><span class="prn" style="color:var(--tm)">下一階段</span><span style="font-size:12px">內容函數 &amp; 資料接入</span></div>
+            <div class="panel-h"><div class="panel-t">📋 機構架構（示範·依規則書）</div></div>
+            <div id="admin-orgs" style="padding:4px 0"></div>
           </div>
         </div>
       </div>
@@ -560,337 +424,614 @@ tbody tr:hover{background:rgba(0,0,0,.015)}
 </div><!-- /app -->
 
 <script>
-/* ── 組織架構常數（新館=一館/二館/三館；本館=護理之家+清X系列）── */
-const ORGS = {
-  '新館': ['一館','二館','三館'],
-  '本館': ['清福','清春','清山','清氣','清日','清泉','清心','清照','清水','清平','清風','清清','清安','清景','清涼','護理之家']
-};
+/* ════════════════ 機構／資料模型（示範·第一階段假資料） ════════════════
+   依〈異常示警收錄規則 V1.0〉改用規則書架構：
+   本館＝3 間 48 床機構（啟用本館整體 144 床兩層燈號）。
+   新館與護理之家床數為示範假設，實際床數待校正。            */
+/* 本館樓層分區（每層 3 間清X機構，各 48 床 → 樓層 144 床） */
+const FLOORS=[
+  {key:'8F',name:'8F 福春山',facs:['清福','清春','清山']},
+  {key:'7F',name:'7F 氣日泉',facs:['清氣','清日','清泉']},
+  {key:'6F',name:'6F 心照水',facs:['清心','清照','清水']},
+  {key:'5F',name:'5F 平風清',facs:['清平','清風','清清']},
+  {key:'3F',name:'3F 安景涼',facs:['清安','清景','清涼']},
+];
+const FACILITIES=[
+  {name:'一館',zone:'新館',beds:200},
+  {name:'二館',zone:'新館',beds:100},
+  {name:'三館',zone:'新館',beds:200},
+].concat([].concat.apply([],FLOORS.map(function(fl){return fl.facs.map(function(f){return {name:f,zone:'本館',beds:48,floor:fl.key};});})))
+ .concat([{name:'護理之家',zone:'護理之家',beds:96}]);
+const ZONES=['新館','本館','護理之家'];
+/* 各級督導管理整體分區（跨機構／跨院區的督導管理單位） */
+const SUPZONES=[
+  {name:'新館整體',             floors:[],              facs:['一館','二館','三館']},
+  {name:'本館 8F＋7F＋6F',      floors:['8F','7F','6F'], facs:[]},
+  {name:'本館 5F＋3F＋護理之家', floors:['5F','3F'],      facs:['護理之家']},
+];
+function supFacs(sz){ let l=sz.facs.slice(); sz.floors.forEach(function(fk){const fl=FLOORS.find(function(f){return f.key===fk;}); if(fl)l=l.concat(fl.facs);}); return l; }
+function facOf(name){return FACILITIES.find(f=>f.name===name)||{beds:48,zone:''};}
+function facsInZone(z){return FACILITIES.filter(f=>f.zone===z).map(f=>f.name);}
+function sumBeds(list){return list.reduce(function(a,f){return a+facOf(f).beds;},0);}
 
-let curGroup = '';       // 目前院區：'' / '新館' / '本館'
-let selFacs  = [];       // 目前複選的機構清單（空=整個院區）
+/* 六類「列管事件」類別（計入機構總燈號與多重異常） */
+const CATS=[['skin','皮膚異常'],['behavior','行為異常'],['hosp','住院'],['fall','跌倒'],['family','家屬爭議'],['clinic','門診就醫']];
+const CAT_NAME={}; CATS.forEach(c=>CAT_NAME[c[0]]=c[1]);
 
-/* ── 院區（第一層）── */
-function setGroup(btn, group) {
-  document.querySelectorAll('.scope-l1 .sp').forEach(b => b.classList.remove('on'));
-  btn.classList.add('on');
-  curGroup = group;
-  selFacs  = [];
-  const l2    = document.getElementById('scope-l2');
-  const l2btn = document.getElementById('scope-l2-btns');
-  if (group && ORGS[group]) {
-    l2btn.innerHTML = ORGS[group].map(f =>
-      `<button class="sp sm" data-fac="${f}" onclick="toggleFac(this,'${f}')">${f}</button>`
-    ).join('');
-    l2.style.display = '';
-  } else {
-    l2.style.display = 'none';
-    l2btn.innerHTML = '';
-  }
-  updateClearBtn();
-  syncPresetBtns();
-  filterAll();
-}
-
-/* ── 機構（第二層，可複選）── */
-function toggleFac(btn, fac) {
-  const i = selFacs.indexOf(fac);
-  if (i >= 0) { selFacs.splice(i, 1); btn.classList.remove('on'); }
-  else        { selFacs.push(fac);    btn.classList.add('on');    }
-  updateClearBtn();
-  syncPresetBtns();
-  filterAll();
-}
-
-function clearFacs() {
-  selFacs = [];
-  document.querySelectorAll('#scope-l2-btns .sp').forEach(b => b.classList.remove('on'));
-  updateClearBtn();
-  syncPresetBtns();
-  filterAll();
-}
-
-function updateClearBtn() {
-  const c = document.getElementById('sp-clear');
-  if (c) c.style.display = selFacs.length > 0 ? '' : 'none';
-}
-
-function toggleSidebar(){ document.getElementById('app').classList.toggle('sb-collapsed'); }
-function scopeLabel(){
-  if(!curGroup) return '全院區';
-  if(selFacs.length===0) return curGroup+'（全部）';
-  return curGroup+' · '+selFacs.join('＋');
-}
-function updateScopeSummary(){ const e=document.getElementById('scope-now'); if(e) e.textContent='目前範圍：'+scopeLabel(); }
-function matchScope(fac) {
-  if (!curGroup) return true;                                  // 全院區
-  if (selFacs.length > 0) return selFacs.includes(fac);        // 複選機構
-  return ORGS[curGroup] && ORGS[curGroup].includes(fac);       // 整個院區
-}
-
-/* ── 計數工具 ── */
-function countVisible(sel, root) {
-  root = root || document;
-  let n = 0;
-  root.querySelectorAll(sel).forEach(el => { if (el.style.display !== 'none') n++; });
-  return n;
-}
-
-/* ── KPI 動態重算 ── */
-function recountKPIs() {
-  document.querySelectorAll('[data-count-sel]').forEach(el => {
-    const root = el.dataset.countRoot ? document.querySelector(el.dataset.countRoot) : document;
-    const n = root ? countVisible(el.dataset.countSel, root) : 0;
-    el.textContent = n;
-    if (el.classList.contains('nb')) el.style.display = n > 0 ? '' : 'none';
-  });
-}
-
-/* ── 全域篩選 ── */
-function filterAll() {
-  // 卡片 / 表格列 / 儀表板列
-  document.querySelectorAll('.ac[data-fac]').forEach(c => { c.style.display = matchScope(c.dataset.fac) ? '' : 'none'; });
-  document.querySelectorAll('tr[data-fac]').forEach(r => { r.style.display = matchScope(r.dataset.fac) ? '' : 'none'; });
-  document.querySelectorAll('.prow[data-fac]').forEach(r => { r.style.display = matchScope(r.dataset.fac) ? '' : 'none'; });
-
-  // 儀表板兩個面板的「無資料」提示
-  document.querySelectorAll('#pv-dashboard .panel').forEach(panel => {
-    const prows = panel.querySelectorAll('.prow[data-fac]');
-    if (prows.length === 0) return;
-    const anyVis = Array.from(prows).some(r => r.style.display !== 'none');
-    const empty  = panel.querySelector('.prow-empty');
-    if (empty) empty.style.display = anyVis ? 'none' : '';
-  });
-
-  // 儀表板整體「無任何示警」（依全系統可見卡片數）
-  const dbNoAlert = document.getElementById('db-no-alert');
-  if (dbNoAlert) {
-    const filtering = curGroup || selFacs.length > 0;
-    dbNoAlert.style.display = (filtering && countVisible('.ac') === 0) ? '' : 'none';
-  }
-
-  // 各分頁 .ag 下的 no-alert 提示
-  document.querySelectorAll('.ag').forEach(ag => {
-    const cards   = Array.from(ag.querySelectorAll('.ac[data-fac]'));
-    const hasVis  = cards.some(c => c.style.display !== 'none');
-    const noAlert = ag.nextElementSibling;
-    if (noAlert && noAlert.classList.contains('no-alert')) {
-      noAlert.style.display = (cards.length > 0 && !hasVis) ? '' : 'none';
-    }
-  });
-
-  // 員工試用期異常空白提示
-  const staffNoAlert = document.getElementById('staff-new-no-alert');
-  if (staffNoAlert) {
-    const staffCards = document.querySelectorAll('#sv-staff-new .ac[data-fac]');
-    const anyStaff   = Array.from(staffCards).some(c => c.style.display !== 'none');
-    staffNoAlert.style.display = (staffCards.length > 0 && !anyStaff) ? '' : 'none';
-  }
-
-  // KPI / 徽章重算
-  recountKPIs();
-  // 儀表板：示警總表 / 今日新增 / 待辦
-  buildDashboard();
-  updateScopeSummary();
-}
-
-/* ── 儀表板：機構健康度總表 + 突發狀況 + 待辦追蹤 ── */
-const MATRIX_CATS=[['skin','皮膚'],['behavior','行為'],['hosp','住院'],['fall','跌倒'],['family','家屬'],['vip','VIP'],['newres','新入住'],['outpatient','門診'],['staff','員工']];
-const CAT_TARGET={skin:['resident','skin'],behavior:['resident','behavior'],hosp:['resident','hosp'],fall:['resident','fall'],family:['resident','family'],vip:['vip','viplist'],newres:['vip','newres'],outpatient:['outpatient',''],staff:['staff','new']};
-const TAG_LABEL={med:'醫療',adm:'行政',rep:'填報'};
-const TODOS=[
-  {fac:'清福',cat:'skin',t:'傷口科會診：林美蘭 · 第3度壓傷',tag:'med',st:'逾期 1 天',over:true,done:false},
-  {fac:'護理之家',cat:'family',t:'家屬說明會：黃秀芬 · 照護疏失投訴',tag:'adm',st:'今日 10:00',over:false,done:false},
-  {fac:'三館',cat:'behavior',t:'精神科評估：陳志明 · 攻擊行為',tag:'med',st:'進行中',over:false,done:false},
-  {fac:'清泉',cat:'newres',t:'感控接觸者評估：楊正義 · 帶狀疱疹',tag:'rep',st:'待處理',over:false,done:false},
-  {fac:'清福',cat:'staff',t:'離職處理評估：李品萱 · 出勤異常',tag:'adm',st:'逾期 3 天',over:true,done:false},
-  {fac:'護理之家',cat:'vip',t:'轉院追蹤：林金城 · 轉台大醫院',tag:'adm',st:'回院 09/29',over:false,done:false},
-  {fac:'三館',cat:'fall',t:'照護會議追蹤：張建宏 · 反覆跌倒',tag:'med',st:'已召開',over:false,done:true},
+/* 事件資料：rid=住民代號，同一 rid 多筆即多重異常來源
+   level:'r'|'y'；status:'listed'(正式收錄)|'pending'(待人工確認，暫列黃)
+   flags：vip / newres(新入住) / today(今日新增管制) */
+const EVENTS=[
+ // ── 新館·一館（100床）──
+ {rid:'wdd',name:'王大德',fac:'一館',bed:'A605-2',cat:'hosp',level:'r',status:'listed',title:'90 日內第 2 次非計畫性住院',detail:'因肺炎再次住院，90 日內第 2 次，胸腔科持續追蹤，評估慢性肺炎預防計畫。',date:'09-30'},
+ {rid:'wdd',name:'王大德',fac:'一館',bed:'A605-2',cat:'behavior',level:'y',status:'listed',title:'拒食｜連續 2 日',detail:'連續 2 日每餐進食不到一半，已通報醫師與營養師評估。',date:'10-03'},
+ {rid:'zws',name:'周文山',fac:'一館',bed:'A210-1',cat:'skin',level:'r',status:'listed',title:'大傷口｜坐骨 10×8cm 深及皮下',detail:'坐骨壓傷深層組織受損，傷口科持續追蹤，評估住院治療可行性。',date:'09-28'},
+ // ── 新館·二館（100床）──
+ {rid:'zly',name:'鄭麗月',fac:'二館',bed:'A403-1',cat:'hosp',level:'y',status:'listed',title:'非計畫性住院（第 1 次）',detail:'因泌尿道感染住院，返院後追蹤尿液檢查，個管師介入協調。',date:'10-01'},
+ {rid:'lmz',name:'廖明正',fac:'二館',bed:'A302-2',cat:'clinic',level:'y',status:'listed',title:'當月就醫 2 次',detail:'慢性疼痛回診，本月累計 2 次，評估疼痛管理計畫。',date:'10-04'},
+ {rid:'lzc',name:'林志成',fac:'二館',bed:'A315-1',cat:'fall',level:'y',status:'pending',title:'疑似跌倒（待人工確認）',detail:'紀錄：「疑似跌倒，已通知家屬」，未載明是否受傷或頭部撞擊。',date:'10-06',today:true,pend:'缺少判定燈號所需關鍵資訊（是否受傷／頭部撞擊）'},
+ // ── 新館·三館（96床）──
+ {rid:'wsh',name:'吳淑惠',fac:'三館',bed:'A802-4',cat:'behavior',level:'y',status:'listed',title:'躁動、吵鬧｜7 日內 3 次',detail:'近 7 日 3 次夜間躁動吵鬧，已通報醫師評估。',date:'10-02'},
+ {rid:'cgm',name:'陳光明',fac:'三館',bed:'A508-1',cat:'fall',level:'y',status:'listed',vip:true,title:'跌倒｜無明顯外傷',detail:'如廁時跌倒，無骨折，X 光複查無大礙，已通知家屬。',date:'10-03'},
+ // ── 本館·8F 福春山·清福（48床）── 集中 3 位紅燈住民 → 清福機構紅燈
+ {rid:'lml',name:'林美蘭',fac:'清福',bed:'C803-2',cat:'skin',level:'r',status:'listed',title:'壓傷 3 級｜薦骨 7×5cm',detail:'薦骨 3 級壓傷，傷口護理每日 2 次，家屬已告知，待傷口科會診。',date:'09-29'},
+ {rid:'lml',name:'林美蘭',fac:'清福',bed:'C803-2',cat:'fall',level:'y',status:'listed',title:'跌倒｜無外傷',detail:'夜間下床跌倒，無外傷，已加強夜間陪伴。',date:'10-02'},
+ {rid:'zjh',name:'張建宏',fac:'清福',bed:'C806-3',cat:'fall',level:'r',status:'listed',today:true,title:'90 日內第 2 次跌倒',detail:'本月第 3 次跌倒，最近右膝挫傷，已召開照護會議，評估床欄與髖部保護器。',date:'10-06'},
+ {rid:'ljx',name:'林錦繡',fac:'清福',bed:'C815-1',cat:'clinic',level:'r',status:'listed',today:true,title:'當月就醫 3 次以上',detail:'門診血糖急症轉急診住院，本月累計 3 次就醫。',date:'10-06'},
+ // ── 本館·8F 福春山·清春（48床）──
+ {rid:'zmr',name:'趙明仁',fac:'清春',bed:'D809-1',cat:'fall',level:'y',status:'listed',newres:true,title:'跌倒｜入住 3 日內',detail:'入住適應期如廁跌倒，無外傷，已列跌倒高風險名單。',date:'10-03'},
+ {rid:'lbg',name:'林寶桂',fac:'清春',bed:'D810-3',cat:'skin',level:'y',status:'pending',title:'傷口大小待確認（待人工確認）',detail:'紀錄：「臀部傷口約十元硬幣大小」，系統抓不到公分數，暫列黃燈。',date:'10-06',today:true,pend:'抓不到判定燈號所需的數值（傷口大小）'},
+ // ── 本館·7F 氣日泉·清氣（48床）──
+ {rid:'czm',name:'陳志明',fac:'清氣',bed:'C708-1',cat:'behavior',level:'r',status:'listed',title:'攻擊行為｜造成照護人員受傷',detail:'本週 3 次攻擊照護人員致抓傷，已通報精神科評估藥物調整。',date:'10-01'},
+ {rid:'czm',name:'陳志明',fac:'清氣',bed:'C708-1',cat:'clinic',level:'y',status:'listed',title:'當月就醫 2 次',detail:'精神科與神經內科回診，本月累計 2 次。',date:'10-04'},
+ // ── 本館·7F 氣日泉·清日（48床）──
+ {rid:'xxl',name:'謝秀蘭',fac:'清日',bed:'D705-1',cat:'skin',level:'y',status:'listed',title:'壓傷 2 級｜足跟水泡',detail:'足跟 2 級壓傷，敷料每日更換，使用氣墊床。',date:'10-02'},
+ // ── 本館·7F 氣日泉·清泉（48床）──
+ {rid:'gzm',name:'高志明',fac:'清泉',bed:'E710-2',cat:'behavior',level:'y',status:'pending',title:'類別待確認（待人工確認）',detail:'紀錄：「推開照服員」，可能屬拒絕照護或攻擊行為，需人工判別。',date:'10-06',today:true,pend:'不容易判斷類別（拒絕照護 vs 攻擊行為）'},
+ // ── 本館·6F 心照水·清心（48床）──
+ {rid:'yzy',name:'楊正義',fac:'清心',bed:'C612-3',cat:'skin',level:'r',status:'listed',newres:true,title:'感染性皮膚病｜帶狀疱疹',detail:'入住第 2 天確診帶狀疱疹，已隔離處置，皮膚科會診，感控評估接觸者。',date:'10-04'},
+ // ── 本館·6F 心照水·清照（48床）──
+ {rid:'cbx',name:'陳碧霞',fac:'清照',bed:'D618-2',cat:'skin',level:'y',status:'listed',title:'壓傷 1 級｜腳踝發紅不退色',detail:'腳踝 1 級壓傷（壓了不退色），加強翻身每 2 小時，使用減壓墊。',date:'10-03'},
+ // ── 護理之家（50床）──
+ {rid:'hxf',name:'黃秀芬',fac:'護理之家',bed:'C210-2',cat:'family',level:'r',status:'listed',title:'書面申訴｜照護疏失',detail:'家屬電子郵件申訴夜班照護不足，認為壓傷係疏失造成，社工介入，已排說明會。',date:'10-01'},
+ {rid:'lzn',name:'劉正男',fac:'護理之家',bed:'C201-1',cat:'hosp',level:'r',status:'listed',vip:true,title:'住進加護病房',detail:'肺炎急性惡化住進加護病房，已緊急聯絡家屬到院，個管師追蹤。',date:'10-02'},
+ {rid:'xyt',name:'許雅婷',fac:'護理之家',bed:'D205-2',cat:'skin',level:'y',status:'listed',vip:true,title:'壓傷 1 級｜足跟',detail:'足跟 1 級壓傷，使用氣墊床，每日照片回報家屬。',date:'10-03'},
+ {rid:'fsj',name:'方淑娟',fac:'護理之家',bed:'D208-3',cat:'behavior',level:'y',status:'listed',newres:true,title:'拒食、情緒低落',detail:'入住適應困難，拒食哭泣，已轉介心理師評估，加強家屬探視。',date:'10-02'},
 ];
 
-function tagCards(){
-  document.querySelectorAll('.ac[data-fac]').forEach(c=>{
-    if(c.dataset.cat) return;
-    let cat=''; const sv=c.closest('.sv');
-    if(sv){const id=sv.id;
-      if(id.indexOf('sv-resident-')===0) cat=id.slice(12);
-      else if(id==='sv-vip-viplist') cat='vip';
-      else if(id==='sv-vip-newres') cat='newres';
-      else if(id==='sv-staff-new') cat='staff';
-    } else { const pv=c.closest('.pv'); if(pv&&pv.id==='pv-outpatient') cat='outpatient'; }
-    c.dataset.cat=cat;
-  });
-}
+/* 員工管理（獨立模組，不計入機構燈號與多重異常） */
+const STAFF_NEW=[
+ {name:'李品萱',fac:'清福',role:'照服員',days:21,level:'r',note:'連續 2 次評核同一項目仍「待加強」'},
+ {name:'林依柔',fac:'清福',role:'行政組',days:38,level:'y',note:'一次評核有項目被評為「待加強」'},
+ {name:'洪寶珠',fac:'一館',role:'護理師',days:7,level:'g',note:'評核正常'},
+ {name:'張景輝',fac:'三館',role:'護理師',days:14,level:'g',note:'評核正常'},
+ {name:'吳淑雯',fac:'二館',role:'照服員',days:59,level:'g',note:'評核正常'},
+];
+const STAFF_MANUAL=[
+ {name:'王美玲',fac:'二館',role:'照服員',level:'y',note:'出勤異常列管中，列管第 1 個月（每週 1 筆輔導）',over:false},
+ {name:'周國華',fac:'護理之家',role:'照服員',level:'r',note:'重大疏失列管，列管滿 90 日未決定（逾期）',over:true},
+];
 
-function pickFacility(fac){
-  const group = ORGS['新館'].includes(fac)?'新館':'本館';
-  document.querySelectorAll('.scope-l1 .sp').forEach(b=>{ b.classList.toggle('on', b.textContent.trim()===group); });
-  curGroup=group; selFacs=[fac];
+const TODOS=[
+ {fac:'清福',cat:'skin',t:'傷口科會診：林美蘭 · 壓傷 3 級',tag:'med',st:'逾期 1 天',over:true,done:false},
+ {fac:'護理之家',cat:'family',t:'家屬說明會：黃秀芬 · 書面申訴',tag:'adm',st:'今日 10:00',over:false,done:false},
+ {fac:'清氣',cat:'behavior',t:'精神科評估：陳志明 · 攻擊致傷',tag:'med',st:'進行中',over:false,done:false},
+ {fac:'清心',cat:'skin',t:'感控接觸者評估：楊正義 · 帶狀疱疹',tag:'rep',st:'待處理',over:false,done:false},
+ {fac:'護理之家',cat:'hosp',t:'加護病房追蹤：劉正男 · 肺炎惡化',tag:'adm',st:'追蹤中',over:false,done:false},
+ {fac:'清福',cat:'fall',t:'照護會議追蹤：張建宏 · 反覆跌倒',tag:'med',st:'已召開',over:false,done:true},
+];
+
+/* ════════════════ 範圍篩選（以督導管理分區為主） ════════════════ */
+let curSup=-1, selFacs=[];   // curSup：-1=全院區，0/1/2=SUPZONES 索引
+function spanOfFac(fac){ for(let i=0;i<SUPZONES.length;i++){ if(supFacs(SUPZONES[i]).indexOf(fac)>=0) return i; } return -1; }
+function spanOfFloor(fk){ for(let i=0;i<SUPZONES.length;i++){ if(SUPZONES[i].floors.indexOf(fk)>=0) return i; } return -1; }
+function setL1Active(idx){ document.querySelectorAll('.scope-l1 .sp').forEach(b=>b.classList.toggle('on', +b.dataset.sup===idx)); }
+function l2Buttons(idx,sel){ return supFacs(SUPZONES[idx]).map(f=>'<button class="sp sm'+((sel||selFacs).indexOf(f)>=0?' on':'')+'" data-fac="'+f+'" onclick="toggleFac(this,\''+f+'\')">'+f+'</button>').join(''); }
+function showL2(idx){
   const l2=document.getElementById('scope-l2'), l2btn=document.getElementById('scope-l2-btns');
-  l2btn.innerHTML=ORGS[group].map(f=>'<button class="sp sm'+(f===fac?' on':'')+'" data-fac="'+f+'" onclick="toggleFac(this,\''+f+'\')">'+f+'</button>').join('');
-  l2.style.display=''; updateClearBtn();
+  if(idx>=0){ l2btn.innerHTML=l2Buttons(idx); l2.style.display=''; }
+  else{ l2btn.innerHTML=''; l2.style.display='none'; }
 }
+function setSup(btn,idx){
+  setL1Active(idx); curSup=idx; selFacs=[];
+  showL2(idx); updateClearBtn(); syncPresetBtns(); renderAll();
+}
+function toggleFac(btn,fac){
+  const i=selFacs.indexOf(fac);
+  if(i>=0){selFacs.splice(i,1);btn.classList.remove('on');}
+  else{selFacs.push(fac);btn.classList.add('on');}
+  updateClearBtn(); syncPresetBtns(); renderAll();
+}
+function clearFacs(){ selFacs=[]; document.querySelectorAll('#scope-l2-btns .sp').forEach(b=>b.classList.remove('on')); updateClearBtn(); syncPresetBtns(); renderAll(); }
 function syncPresetBtns(){
   document.querySelectorAll('.fav[data-facs]').forEach(b=>{
     const fs=b.dataset.facs.split(',');
-    const on=curGroup==='本館'&&fs.length>0&&fs.every(f=>selFacs.includes(f));
-    b.classList.toggle('on',on);
+    b.classList.toggle('on', fs.length>0&&fs.every(f=>selFacs.includes(f)));
   });
 }
-function pickPreset(facs){
-  // 切換到本館；若原本不在本館，先清空既有選取
-  if(curGroup!=='本館'){ curGroup='本館'; selFacs=[]; }
+// 本館樓層常用：同一督導分區內可複選疊加（點多層累加、再點取消）
+function pickPreset(facs,floorKey){
+  const span=spanOfFloor(floorKey);
+  if(curSup!==span){ curSup=span; selFacs=[]; }
   const allIn=facs.every(f=>selFacs.includes(f));
-  if(allIn){ selFacs=selFacs.filter(f=>facs.indexOf(f)<0); }   // 已全選 → 取消這組
-  else { facs.forEach(f=>{ if(selFacs.indexOf(f)<0) selFacs.push(f); }); }  // 疊加這組
-  document.querySelectorAll('.scope-l1 .sp').forEach(b=>b.classList.toggle('on', b.textContent.trim()==='本館'));
-  const l2=document.getElementById('scope-l2'), l2btn=document.getElementById('scope-l2-btns');
-  l2btn.innerHTML=ORGS['本館'].map(f=>'<button class="sp sm'+(selFacs.indexOf(f)>=0?' on':'')+'" data-fac="'+f+'" onclick="toggleFac(this,\''+f+'\')">'+f+'</button>').join('');
-  l2.style.display=''; syncPresetBtns(); updateClearBtn(); filterAll();
+  if(allIn){ selFacs=selFacs.filter(f=>facs.indexOf(f)<0); }
+  else{ facs.forEach(f=>{ if(selFacs.indexOf(f)<0) selFacs.push(f); }); }
+  setL1Active(span); showL2(span); syncPresetBtns(); updateClearBtn(); renderAll();
 }
-function drill(fac,cat){ pickFacility(fac); const t=CAT_TARGET[cat]||['dashboard','']; goAlert(t[0],t[1]); }
-function pickFacOnly(fac){ pickFacility(fac); filterAll(); }
+// 從總表點機構／類別 → 單選該機構
+function selectOneFac(fac){
+  const span=spanOfFac(fac); curSup=span; selFacs=[fac];
+  setL1Active(span); showL2(span); updateClearBtn(); syncPresetBtns();
+}
+function updateClearBtn(){ const c=document.getElementById('sp-clear'); if(c)c.style.display=selFacs.length>0?'':'none'; }
+function matchScope(fac){
+  if(selFacs.length>0) return selFacs.indexOf(fac)>=0;
+  if(curSup<0) return true;
+  return supFacs(SUPZONES[curSup]).indexOf(fac)>=0;
+}
+function scopeLabel(){
+  if(selFacs.length>0) return selFacs.join('＋');
+  if(curSup<0) return '全院區';
+  return SUPZONES[curSup].name;
+}
+function toggleSidebar(){ document.getElementById('app').classList.toggle('sb-collapsed'); }
 
-function setTxt(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
-function toggleTodo(i,el){ if(TODOS[i]) TODOS[i].done=el.checked; buildDashboard(); }
-function filterSudden(){
-  const q=(document.getElementById('db-search')||{}).value||'';
-  document.querySelectorAll('#db-sudden .sud').forEach(r=>{
-    r.style.display = (!q || (r.dataset.name||'').indexOf(q)>=0) ? '' : 'none';
+/* ════════════════ 計算核心 ════════════════ */
+function residentsList(){
+  const m={};
+  EVENTS.forEach(e=>{ (m[e.rid]=m[e.rid]||{rid:e.rid,name:e.name,fac:e.fac,bed:e.bed,vip:false,newres:false,ev:[]});
+    const r=m[e.rid]; r.ev.push(e); if(e.vip)r.vip=true; if(e.newres)r.newres=true; });
+  return Object.values(m);
+}
+// 多重異常：≥2 類「已收錄(listed)」事件類別
+function isMulti(r){ const s={}; r.ev.forEach(e=>{if(e.status==='listed')s[e.cat]=1;}); return Object.keys(s).length>=2; }
+// 住民燈號：多重→紅；任一 listed 紅→紅；任一事件黃(含待確認)→黃；否則綠
+function resLight(r){
+  if(isMulti(r)) return 'r';
+  if(r.ev.some(e=>e.status==='listed'&&e.level==='r')) return 'r';
+  if(r.ev.some(e=>e.level==='y')) return 'y';
+  return 'g';
+}
+// 機構總燈號：R=紅燈住民數、Y=黃燈住民數、beds=床數
+function bedThreshold(beds){ return Math.max(3,Math.floor(beds/16)); } // 48→3,96→6,144→9,200→12,720→45（暫定）
+function facLightByBeds(beds,R,Y){
+  const t=bedThreshold(beds);
+  if(R>=t) return 'r';
+  if(R>=1||Y>=t) return 'y';
+  return 'g';
+}
+// 單一機構統計（依範圍）
+function facStat(fac){
+  const rs=residentsList().filter(r=>r.fac===fac);
+  let R=0,Y=0; const catCell={};
+  rs.forEach(r=>{ const L=resLight(r); if(L==='r')R++; else if(L==='y')Y++; });
+  CATS.forEach(c=>{
+    const evs=EVENTS.filter(e=>e.fac===fac&&e.cat===c[0]);
+    if(!evs.length){catCell[c[0]]=null;return;}
+    const hasR=evs.some(e=>e.status==='listed'&&e.level==='r');
+    const hasPend=evs.some(e=>e.status==='pending');
+    catCell[c[0]]={n:evs.length,sev:hasR?'r':(hasPend&&evs.every(e=>e.status==='pending')?'p':'y')};
   });
+  return {R,Y,beds:facOf(fac).beds,light:facLightByBeds(facOf(fac).beds,R,Y),catCell};
 }
 
-function buildDashboard(){
-  tagCards();
-  const facMap={}; let totR=0,totY=0;
-  document.querySelectorAll('.ac[data-fac]').forEach(c=>{
-    if(!matchScope(c.dataset.fac)) return;
-    const fac=c.dataset.fac, cat=c.dataset.cat; if(!cat) return;
-    const sev=c.classList.contains('r')?'r':(c.classList.contains('y')?'y':''); if(!sev) return;
-    const fm=facMap[fac]=facMap[fac]||{};
-    const cc=fm[cat]=fm[cat]||{r:0,y:0}; cc[sev]++;
-    if(sev==='r')totR++; else totY++;
+/* ════════════════ 導覽 ════════════════ */
+const pages={dashboard:['示警儀表板','全院異常事件即時概覽'],resident:['住民異常','皮膚・行為・住院・跌倒・家屬・門診六類'],
+  vip:['VIP及新入住民','VIP 與新入住民動態追蹤'],staff:['員工管理','試用期評核與手動列管'],
+  rules:['收錄規則','異常示警收錄規則 V1.0（可查詢）'],admin:['管理者頁面','系統設定與機構架構']};
+function go(el){
+  const pg=el.dataset.page;
+  document.querySelectorAll('.pv').forEach(v=>v.classList.remove('on'));
+  document.querySelectorAll('.nav').forEach(n=>n.classList.remove('on'));
+  document.getElementById('pv-'+pg).classList.add('on'); el.classList.add('on');
+  document.getElementById('hd-t').textContent=pages[pg][0];
+  document.getElementById('hd-s').textContent=pages[pg][1];
+  const sb=document.getElementById('scope-bar'); sb.style.display=(pg==='rules'||pg==='admin')?'none':'';
+  renderAll();
+}
+function goCat(fac,cat){ selectOneFac(fac); rfCat=cat||null; rfSev=null; go(document.querySelector('.nav[data-page="resident"]')); }
+function pickFac(fac){ selectOneFac(fac); renderAll(); }
+// 儀表板 → 住民異常：依燈號跳轉（維持目前範圍）
+function goResSev(sev){ rfCat=null; rfSev=sev; go(document.querySelector('.nav[data-page="resident"]')); }
+// 點某機構的紅／黃數字 → 單選該機構 + 該燈號名單
+function drillFacSev(fac,sev){ selectOneFac(fac); rfCat=null; rfSev=sev; go(document.querySelector('.nav[data-page="resident"]')); }
+
+/* ════════════════ 渲染 ════════════════ */
+let rfCat=null, rfSev=null;   // 住民異常頁：rfCat=類別篩選、rfSev=燈號篩選
+const L_LABEL={r:'🔴 紅燈',y:'🟡 黃燈',p:'🟣 待確認',g:'🟢 綠燈'};
+function evCard(e){
+  const cls=e.status==='pending'?'p':e.level;
+  const badge=e.status==='pending'?'<span class="ab p">🟣 待確認</span>':(e.level==='r'?'<span class="ab r">🔴 紅燈</span>':'<span class="ab y">🟡 黃燈</span>');
+  const flags=(e.vip?'<span class="amt vip">⭐ VIP</span>':'')+(e.newres?'<span class="amt new">🆕 新入住</span>':'');
+  const pend=e.pend?'<div class="am"><span class="amt" style="color:var(--pend)">待確認原因：'+e.pend+'</span></div>':'';
+  return '<div class="ac '+cls+'"><div class="ach"><div><div class="an">'+e.name+'</div><div class="ar">'+CAT_NAME[e.cat]+'</div></div>'+badge+'</div>'+
+    '<div class="at">'+e.title+'｜'+e.date+'</div><div class="ad">'+e.detail+'</div>'+
+    '<div class="am"><span class="amt fac">'+e.fac+'</span><span class="amt bed">'+e.bed+'</span>'+flags+'</div>'+pend+'</div>';
+}
+
+function renderDashboard(){
+  const rs=residentsList().filter(r=>matchScope(r.fac));
+  let totR=0,totY=0,totMulti=0;
+  rs.forEach(r=>{const L=resLight(r);if(L==='r')totR++;else if(L==='y')totY++; if(isMulti(r))totMulti++;});
+  const pendEvs=EVENTS.filter(e=>e.status==='pending'&&matchScope(e.fac));
+  const todos=TODOS.filter(t=>matchScope(t.fac));
+
+  // 示警總表 matrix
+  const head=document.getElementById('db-matrix-head'), body=document.getElementById('db-matrix-body');
+  head.innerHTML='<tr><th>機構</th><th>燈</th>'+CATS.map(c=>'<th>'+c[1].slice(0,2)+'</th>').join('')+'<th>紅</th><th>黃</th></tr>';
+  // 單一清X機構列
+  function facRow(fac,indent){
+    const s=facStat(fac);
+    const cells=CATS.map(c=>{const v=s.catCell[c[0]];
+      if(!v) return '<td><span class="mx-cell z">·</span></td>';
+      return '<td><span class="mx-cell '+v.sev+'" onclick="goCat(\''+fac+'\',\''+c[0]+'\')">'+v.n+'</span></td>';}).join('');
+    const rSum=s.R?'<span class="mx-sum r" onclick="drillFacSev(\''+fac+'\',\'r\')">'+s.R+'</span>':'';
+    const ySum=s.Y?'<span class="mx-sum y" onclick="drillFacSev(\''+fac+'\',\'y\')">'+s.Y+'</span>':'';
+    return '<tr class="mx-row"><td'+(indent?' style="padding-left:20px"':'')+'><span class="mx-name" onclick="pickFac(\''+fac+'\')">'+fac+'<span style="color:var(--tm);font-weight:400;font-size:11px">（'+s.beds+'床）</span></span></td>'+
+      '<td><span class="mx-dot '+s.light+'" title="'+L_LABEL[s.light]+'｜紅'+s.R+' 黃'+s.Y+'"></span></td>'+cells+
+      '<td>'+rSum+'</td><td>'+ySum+'</td></tr>';
+  }
+  // 樓層分區／本館整體 的綜合列
+  function rollup(label,list,cls){
+    const beds=sumBeds(list);
+    let R=0,Y=0; residentsList().filter(r=>list.indexOf(r.fac)>=0).forEach(r=>{const L=resLight(r);if(L==='r')R++;else if(L==='y')Y++;});
+    const L=facLightByBeds(beds,R,Y);
+    const cells=CATS.map(c=>{let n=0,hasR=false,hasY=false,hasP=false;
+      list.forEach(fac=>{const v=facStat(fac).catCell[c[0]];if(v){n+=v.n;if(v.sev==='r')hasR=true;else if(v.sev==='p')hasP=true;else hasY=true;}});
+      if(!n) return '<td><span class="mx-cell z">·</span></td>';
+      const sev=hasR?'r':(hasY?'y':'p');
+      return '<td><span class="mx-cell '+sev+'">'+n+'</span></td>';}).join('');
+    return '<tr class="'+cls+'"><td>'+label+'<span style="color:var(--tm);font-weight:400;font-size:11px">（'+beds+'床）</span></td>'+
+      '<td><span class="mx-dot '+L+'" title="'+L_LABEL[L]+'｜紅'+R+' 黃'+Y+'"></span></td>'+cells+
+      '<td><span class="mx-sum r">'+(R||'')+'</span></td><td><span class="mx-sum y">'+(Y||'')+'</span></td></tr>';
+  }
+  let rowsHtml=''; let anyRow=false;
+  // 單選一個機構時，只顯示該機構（不帶出督導分區／樓層層級）
+  const inScope=FACILITIES.map(f=>f.name).filter(matchScope);
+  if(inScope.length===1){
+    rowsHtml=facRow(inScope[0],false); anyRow=true;
+    body.innerHTML=rowsHtml;
+    document.getElementById('db-no-alert').style.display='none';
+    document.getElementById('db-matrix').style.display='';
+  } else {
+  SUPZONES.forEach(sz=>{
+    const allF=supFacs(sz).filter(f=>matchScope(f));
+    if(!allF.length) return; anyRow=true;
+    rowsHtml+=rollup('👁 '+sz.name,allF,'mx-sup');            // 各級督導管理整體
+    sz.floors.forEach(fk=>{
+      const fl=FLOORS.find(f=>f.key===fk); const ff=fl.facs.filter(f=>matchScope(f)); if(!ff.length) return;
+      rowsHtml+=rollup(fl.name,ff,'mx-floor');                 // 樓層分區燈號
+      ff.forEach(fac=>{ rowsHtml+=facRow(fac,true); });        // 清X機構燈號（縮排）
+    });
+    sz.facs.filter(f=>matchScope(f)).forEach(fac=>{ rowsHtml+=facRow(fac,false); });
   });
-  const ORDER=[].concat(ORGS['新館'],ORGS['本館']);
-  const rows=ORDER.filter(fac=>matchScope(fac)).map(fac=>{
-    const d=facMap[fac]||{}; let r=0,y=0; for(const k in d){r+=d[k].r;y+=d[k].y;}
-    return {fac,r,y,d};
-  });
-
-  const head=document.getElementById('db-matrix-head');
-  const body=document.getElementById('db-matrix-body');
-  const noAlert=document.getElementById('db-no-alert');
-  const tableWrap=document.getElementById('db-matrix');
-  if(head&&body){
-    head.innerHTML='<tr><th>機構</th><th>燈</th>'+MATRIX_CATS.map(c=>'<th>'+c[1]+'</th>').join('')+'<th>紅</th><th>黃</th></tr>';
-    body.innerHTML=rows.map(row=>{
-      const tot=row.r+row.y;
-      const dot=tot>=6?'r':(tot>=3?'y':'g');
-      const cells=MATRIX_CATS.map(function(mc){const k=mc[0];const v=row.d[k];
-        if(!v||(v.r+v.y)===0) return '<td><span class="mx-cell z">·</span></td>';
-        const cls=v.r>0?'r':'y'; const n=v.r+v.y;
-        return '<td><span class="mx-cell '+cls+'" onclick="drill(\''+row.fac+'\',\''+k+'\')">'+n+'</span></td>';
-      }).join('');
-      return '<tr class="mx-row"><td><span class="mx-name" onclick="pickFacOnly(\''+row.fac+'\')">'+row.fac+'</span></td>'+
-             '<td><span class="mx-dot '+dot+'" title="列管 '+tot+' 件"></span></td>'+cells+
-             '<td><span class="mx-sum r" onclick="pickFacOnly(\''+row.fac+'\')">'+(row.r||'')+'</span></td><td><span class="mx-sum y" onclick="pickFacOnly(\''+row.fac+'\')">'+(row.y||'')+'</span></td></tr>';
-    }).join('');
+  body.innerHTML=rowsHtml;
+  document.getElementById('db-no-alert').style.display=anyRow?'none':'';
+  document.getElementById('db-matrix').style.display=anyRow?'':'none';
   }
-  if(rows.length===0){ if(noAlert)noAlert.style.display=''; if(tableWrap)tableWrap.style.display='none'; }
-  else { if(noAlert)noAlert.style.display='none'; if(tableWrap)tableWrap.style.display=''; }
 
-  const cards=[].slice.call(document.querySelectorAll('.ac[data-fac]')).filter(c=>matchScope(c.dataset.fac)&&c.dataset.cat&&c.dataset.new==='1'&&(c.classList.contains('r')||c.classList.contains('y')));
-  cards.sort((a,b)=>(a.classList.contains('r')?0:1)-(b.classList.contains('r')?0:1));
-  const sud=document.getElementById('db-sudden');
-  if(sud){
-    sud.innerHTML=cards.map(function(c){
-      const sev=c.classList.contains('r')?'r':'y';
-      const name=((c.querySelector('.an')||{}).textContent||'').trim();
-      const bedEl=c.querySelector('.amt.bed'); const bed=bedEl?bedEl.textContent.trim():'';
-      const fac=c.dataset.fac, cat=c.dataset.cat;
-      const at=((c.querySelector('.at')||{}).textContent||'').trim();
-      const short=at.split('｜')[0];
-      const loc=bed?(fac+' '+bed):fac;
-      return '<div class="sud" data-name="'+name+' '+bed+'" onclick="drill(\''+fac+'\',\''+cat+'\')"><span class="sud-b '+sev+'"></span><div class="sud-l"><div class="sud-n">'+name+' <small>'+loc+'</small></div><div class="sud-m">'+short+'</div></div></div>';
-    }).join('');
-  }
-  const sudEmpty=document.getElementById('db-sudden-empty');
-  if(sudEmpty)sudEmpty.style.display=cards.length?'none':'';
-  setTxt('db-sud-count',cards.length);
+  // 多重異常 panel
+  const multis=rs.filter(isMulti);
+  document.getElementById('db-multi').innerHTML=multis.map(r=>{
+    const cats=[...new Set(r.ev.filter(e=>e.status==='listed').map(e=>CAT_NAME[e.cat]))].join('＋');
+    return '<div class="lst" onclick="pickFac(\''+r.fac+'\')"><span class="lst-b r"></span><div class="lst-l"><div class="lst-n">'+r.name+' <small>'+r.fac+' '+r.bed+'</small></div><div class="lst-m">'+cats+'（多重異常提高為紅燈）</div></div></div>';
+  }).join('');
+  document.getElementById('db-multi-empty').style.display=multis.length?'none':'';
+  document.getElementById('db-multi-count').textContent=multis.length;
 
-  const todos=TODOS.filter(td=>matchScope(td.fac));
-  const todoEl=document.getElementById('db-todo');
-  if(todoEl){
-    todoEl.innerHTML=todos.map(function(td){
-      const gi=TODOS.indexOf(td);
-      const stCls=td.over&&!td.done?' class="tag over"':'';
-      return '<div class="todo'+(td.done?' done':'')+'"><input type="checkbox" '+(td.done?'checked':'')+' onclick="toggleTodo('+gi+',this)"><div class="todo-l"><div class="todo-t" onclick="drill(\''+td.fac+'\',\''+td.cat+'\')">'+td.t+'</div><div class="todo-m"><span class="tag '+td.tag+'">'+TAG_LABEL[td.tag]+'</span><span>'+td.fac+'</span><span'+stCls+'>'+td.st+'</span></div></div></div>';
-    }).join('');
-  }
-  const todoEmpty=document.getElementById('db-todo-empty');
-  if(todoEmpty)todoEmpty.style.display=todos.length?'none':'';
-  const doneN=todos.filter(t=>t.done).length;
-  const overN=todos.filter(t=>t.over&&!t.done).length;
-  setTxt('db-todo-done',doneN); setTxt('db-todo-all',todos.length);
-  setTxt('db-c-red',totR); setTxt('db-c-yel',totY);
-  setTxt('db-c-todo',todos.length); setTxt('db-c-over',overN);
+  // 今日新增管制（listed 且 today）
+  const sud=EVENTS.filter(e=>e.status==='listed'&&e.today&&matchScope(e.fac));
+  document.getElementById('db-sudden').innerHTML=sud.map(e=>{
+    const sev=e.level;
+    return '<div class="lst" data-name="'+e.name+' '+e.bed+'" onclick="goCat(\''+e.fac+'\',\''+e.cat+'\')"><span class="lst-b '+sev+'"></span><div class="lst-l"><div class="lst-n">'+e.name+' <small>'+e.fac+' '+e.bed+'</small></div><div class="lst-m">'+CAT_NAME[e.cat]+'｜'+e.title+'</div></div></div>';
+  }).join('');
+  document.getElementById('db-sudden-empty').style.display=sud.length?'none':'';
+  document.getElementById('db-sud-count').textContent=sud.length;
 
+  // 待人工確認 panel
+  document.getElementById('db-pend').innerHTML=pendEvs.map(e=>
+    '<div class="lst" data-name="'+e.name+' '+e.bed+'" onclick="goCat(\''+e.fac+'\',\''+e.cat+'\')"><span class="lst-b p"></span><div class="lst-l"><div class="lst-n">'+e.name+' <small>'+e.fac+' '+e.bed+'</small></div><div class="lst-m">'+(e.pend||e.title)+'</div></div></div>'
+  ).join('');
+  document.getElementById('db-pend-empty').style.display=pendEvs.length?'none':'';
+  document.getElementById('db-pend-count').textContent=pendEvs.length;
+
+  // 待辦
+  document.getElementById('db-todo').innerHTML=todos.map(td=>{
+    const gi=TODOS.indexOf(td); const stCls=td.over&&!td.done?' class="tag over"':'';
+    const TAG={med:'醫療',adm:'行政',rep:'填報'};
+    return '<div class="todo'+(td.done?' done':'')+'"><input type="checkbox" '+(td.done?'checked':'')+' onclick="toggleTodo('+gi+',this)"><div class="todo-l"><div class="todo-t" onclick="goCat(\''+td.fac+'\',\''+td.cat+'\')">'+td.t+'</div><div class="todo-m"><span class="tag '+td.tag+'">'+TAG[td.tag]+'</span><span>'+td.fac+'</span><span'+stCls+'>'+td.st+'</span></div></div></div>';
+  }).join('');
+  document.getElementById('db-todo-empty').style.display=todos.length?'none':'';
+
+  // 總表上方：燈號卡（圖二卡片樣式，可點跳住民異常；待辦另有專屬面板）
+  const dc=(sev,cls,icon,label,val,unit)=>'<div class="kc '+cls+' click" onclick="goResSev(\''+sev+'\')"><div class="kl">'+icon+' '+label+'</div><div class="kv"><span>'+val+'</span><span class="ku">'+unit+'</span></div></div>';
+  document.getElementById('db-kpi').innerHTML=
+    dc('r','r','🔴','紅燈住民',totR,'人')+
+    dc('y','y','🟡','黃燈住民',totY,'人')+
+    dc('multi','','🔴','多重異常',totMulti,'人')+
+    dc('p','p','🟣','待人工確認',pendEvs.length,'筆');
   filterSudden();
 }
-
-
-/* ── 頁面導覽 ── */
-const pages = {
-  dashboard:  ['示警儀表板','全院異常事件即時概覽'],
-  resident:   ['住民異常','皮膚・行為・住院・跌倒・家屬爭議'],
-  vip:        ['VIP及新入住民異常','VIP個案動態與新入住民異常追蹤'],
-  outpatient: ['門診就醫異常','門診異常及反覆就醫追蹤'],
-  staff:      ['員工管理','試用期追蹤與全員管理'],
-  admin:      ['管理者頁面','系統設定與資料來源配置'],
-};
-
-function go(el) {
-  const pg = el.dataset.page;
-  document.querySelectorAll('.pv').forEach(v => v.classList.remove('on'));
-  document.querySelectorAll('.nav').forEach(n => n.classList.remove('on'));
-  document.getElementById('pv-' + pg).classList.add('on');
-  el.classList.add('on');
-  document.getElementById('hd-t').textContent = pages[pg][0];
-  document.getElementById('hd-s').textContent = pages[pg][1];
-  filterAll();
+function toggleTodo(i,el){ if(TODOS[i])TODOS[i].done=el.checked; renderDashboard(); }
+function filterSudden(){
+  const q=(document.getElementById('db-search')||{}).value||'';
+  document.querySelectorAll('#db-sudden .lst,#db-pend .lst,#db-multi .lst').forEach(r=>{
+    r.style.display=(!q||(r.dataset.name||r.textContent).indexOf(q)>=0)?'':'none';
+  });
 }
 
-/* 從示警直跳對應分頁 + 子標籤 */
-function goAlert(page, subtab) {
-  const el = document.querySelector(`.nav[data-page="${page}"]`);
-  if (el) go(el);
-  if (subtab) {
-    const pv   = document.getElementById('pv-' + page);
-    const tbtn = pv ? pv.querySelector(`.tb[data-tab="${subtab}"]`) : null;
-    if (tbtn) tab(tbtn, page, subtab);
+function evSortKey(e){ return e.status==='pending'?2:(e.level==='r'?0:1); }
+// 以「人」為單位的卡片：列出該住民所有異常並標明類別與燈號
+function personRows(evs){
+  return evs.map(e=>{ const d=e.status==='pending'?'🟣':(e.level==='r'?'🔴':'🟡');
+    return '<div style="display:flex;gap:7px;padding:5px 0;border-top:1px dashed var(--bd)"><span>'+d+'</span><div style="flex:1;min-width:0"><b style="font-size:12px">'+CAT_NAME[e.cat]+'</b> <span style="font-size:12px;color:var(--ts)">'+e.title+'</span> <span style="font-size:11px;color:var(--tm)">'+e.date+'</span></div></div>';
+  }).join('');
+}
+function multiCard(r){
+  const evs=r.ev.filter(e=>e.status==='listed').sort((a,b)=>evSortKey(a)-evSortKey(b));
+  const cats={}; evs.forEach(e=>{ if(!cats[e.cat]||e.level==='r') cats[e.cat]=e.level; });
+  const summary=Object.keys(cats).map(c=>CAT_NAME[c]+(cats[c]==='r'?'🔴':'🟡')).join('　＋　');
+  const flags=(r.vip?'<span class="amt vip">⭐ VIP</span>':'')+(r.newres?'<span class="amt new">🆕 新入住</span>':'');
+  return '<div class="ac r"><div class="ach"><div><div class="an">'+r.name+'</div><div class="ar">多重異常 · '+Object.keys(cats).length+' 類列管</div></div><span class="ab r">🔴 多重異常提高</span></div>'+
+    '<div class="at" style="font-weight:600;color:var(--tp)">歸納：'+summary+'</div>'+personRows(evs)+
+    '<div class="am" style="margin-top:9px"><span class="amt fac">'+r.fac+'</span><span class="amt bed">'+r.bed+'</span>'+flags+'</div></div>';
+}
+function vipCard(r){
+  const L=resLight(r); const cls=L==='r'?'r':(L==='y'?'y':'');
+  const evs=r.ev.slice().sort((a,b)=>evSortKey(a)-evSortKey(b));
+  const badge='<span class="ab '+(L==='r'?'r':'y')+'">'+(L==='r'?'🔴 紅燈':'🟡 黃燈')+'</span>';
+  const multi=isMulti(r)?'<span class="amt multi">多重異常</span>':'';
+  const flags=(r.vip?'<span class="amt vip">⭐ VIP</span>':'')+(r.newres?'<span class="amt new">🆕 新入住</span>':'');
+  return '<div class="ac '+cls+'"><div class="ach"><div><div class="an">'+r.name+'</div><div class="ar">'+evs.length+' 項動態</div></div>'+badge+'</div>'+personRows(evs)+
+    '<div class="am" style="margin-top:9px"><span class="amt fac">'+r.fac+'</span><span class="amt bed">'+r.bed+'</span>'+flags+multi+'</div></div>';
+}
+function renderResident(){
+  const rs=residentsList().filter(r=>matchScope(r.fac));
+  // 目前類別情境下的事件（rfCat 為 null 代表全部類別）
+  const catEvts=EVENTS.filter(e=>matchScope(e.fac)&&(!rfCat||e.cat===rfCat));
+  const redN=catEvts.filter(e=>e.status==='listed'&&e.level==='r').length;
+  const yelN=catEvts.filter(e=>e.status==='listed'&&e.level==='y').length;
+  const pendN=catEvts.filter(e=>e.status==='pending').length;
+  const multiN=rs.filter(isMulti).length;   // 多重異常為住民層級、跨類別
+  const scopeTxt=(rfCat?CAT_NAME[rfCat]:'全部類別');
+  // KPI 卡（可點選 → 依燈號篩選）
+  const kc=(sev,cls,icon,label,val,unit)=>'<div class="kc '+cls+' click'+(rfSev===sev?' sel':'')+'" onclick="resSev(\''+sev+'\')"><div class="kl">'+icon+' '+label+'</div><div class="kv"><span>'+val+'</span><span class="ku">'+unit+'</span></div><div class="kk">'+scopeTxt+'</div></div>';
+  document.getElementById('res-kpi').innerHTML=
+    kc('r','r','🔴','紅燈',redN,'件')+
+    kc('y','y','🟡','黃燈',yelN,'件')+
+    kc('p','p','🟣','待人工確認',pendN,'筆')+
+    kc('multi','','🔴','多重異常',multiN,'人');
+  // 類別頁籤（含「全部類別」）
+  const tabsEl=document.getElementById('res-tabs');
+  const allN=EVENTS.filter(e=>matchScope(e.fac)).length;
+  let tabs='<button class="tb'+(!rfCat?' on':'')+'" onclick="resTab(\'\')">全部類別（'+allN+'）</button>';
+  tabs+=CATS.map(c=>{
+    const n=EVENTS.filter(e=>e.cat===c[0]&&matchScope(e.fac)).length;
+    return '<button class="tb'+(rfCat===c[0]?' on':'')+'" onclick="resTab(\''+c[0]+'\')">'+c[1]+'（'+n+'）</button>';
+  }).join('');
+  tabsEl.innerHTML=tabs;
+  const body=document.getElementById('res-body');
+  // 多重異常：以「人」為單位歸納（忽略類別篩選、跨類別）
+  if(rfSev==='multi'){
+    const people=rs.filter(isMulti).sort((a,b)=>b.ev.filter(e=>e.status==='listed').length-a.ev.filter(e=>e.status==='listed').length);
+    const clr='<span class="sc" style="cursor:pointer;color:var(--brand)" onclick="resSev(\'multi\')">✕ 清除燈號篩選</span>';
+    body.innerHTML='<div class="sh2"><div class="st">🔴 多重異常（以住民歸納）</div><span class="sc">'+people.length+' 人</span>'+clr+'</div>'+
+      (people.length?'<div class="ag">'+people.map(multiCard).join('')+'</div>':'<div class="no-alert" style="display:block"><div class="no-alert-icon">✅</div>此範圍無多重異常住民</div>');
+    return;
+  }
+  // 內容：類別情境 + 燈號篩選
+  let list=catEvts.slice();
+  let sevLabel='';
+  if(rfSev==='r'){ list=list.filter(e=>e.status==='listed'&&e.level==='r'); sevLabel='🔴 紅燈'; }
+  else if(rfSev==='y'){ list=list.filter(e=>e.status==='listed'&&e.level==='y'); sevLabel='🟡 黃燈'; }
+  else if(rfSev==='p'){ list=list.filter(e=>e.status==='pending'); sevLabel='🟣 待人工確認'; }
+  list.sort((a,b)=>evSortKey(a)-evSortKey(b));
+  const title=scopeTxt+(sevLabel?' · '+sevLabel:'');
+  const clearChip=rfSev?'<span class="sc" style="cursor:pointer;color:var(--brand)" onclick="resSev(\''+rfSev+'\')">✕ 清除燈號篩選</span>':'';
+  if(!list.length){ body.innerHTML='<div class="sh2"><div class="st">'+title+'</div>'+clearChip+'</div><div class="no-alert" style="display:block"><div class="no-alert-icon">✅</div>此範圍目前無符合的示警</div>'; return; }
+  body.innerHTML='<div class="sh2"><div class="st">'+title+'</div><span class="sc">'+list.length+' 件</span>'+clearChip+'</div><div class="ag">'+list.map(evCard).join('')+'</div>';
+}
+function resTab(cat){ rfCat=cat||null; if(rfSev==='multi')rfSev=null; renderResident(); }
+function resSev(sev){ rfSev=(rfSev===sev?null:sev); if(rfSev==='multi')rfCat=null; renderResident(); }
+
+let vipTabCur='vip', vipRedOnly=false;
+function renderVIP(){
+  const rs=residentsList().filter(r=>matchScope(r.fac));
+  const vips=rs.filter(r=>r.vip), news=rs.filter(r=>r.newres);
+  const redCnt=[...vips,...news].filter(r=>resLight(r)==='r').length;
+  const card=(active,cls,icon,label,val,onclick)=>'<div class="kc '+cls+' click'+(active?' sel':'')+'" onclick="'+onclick+'"><div class="kl">'+icon+' '+label+'</div><div class="kv"><span>'+val+'</span><span class="ku">人</span></div></div>';
+  document.getElementById('vip-kpi').innerHTML=
+    card(vipTabCur==='vip','','⭐','VIP 住民（有動態）',vips.length,"vipTab(null,'vip')")+
+    card(vipTabCur==='new','','🆕','新入住民（30日內）',news.length,"vipTab(null,'new')")+
+    card(vipRedOnly,'r','🔴','其中紅燈',redCnt,"vipToggleRed()");
+  let list=(vipTabCur==='vip'?vips:news);
+  if(vipRedOnly) list=list.filter(r=>resLight(r)==='r');
+  list.sort((a,b)=>{const o={r:0,y:1,g:2};return o[resLight(a)]-o[resLight(b)];});
+  const body=document.getElementById('vip-body');
+  const tag=vipTabCur==='vip'?'⭐ VIP 動態':'🆕 新入住民異常';
+  const clr=vipRedOnly?'<span class="sc" style="cursor:pointer;color:var(--brand)" onclick="vipToggleRed()">✕ 只看紅燈</span>':'';
+  if(!list.length){ body.innerHTML='<div class="sh2"><div class="st">'+tag+'</div>'+clr+'</div><div class="no-alert" style="display:block"><div class="no-alert-icon">✅</div>此範圍目前無符合住民</div>'; return; }
+  body.innerHTML='<div class="sh2"><div class="st">'+tag+'</div><span class="sc">'+list.length+' 人</span>'+clr+'</div><div class="ag">'+list.map(vipCard).join('')+'</div>';
+}
+function vipTab(btn,t){ vipTabCur=t; renderVIP(); }
+function vipToggleRed(){ vipRedOnly=!vipRedOnly; renderVIP(); }
+
+let staffTabCur='new', staffLevel=null;
+function pillOf(lv,clickable){
+  const t={r:'🔴 紅燈',y:'🟡 黃燈',g:'🟢 綠燈'}[lv];
+  const cl=(clickable&&lv!=='g')?' style="cursor:pointer" onclick="staffSev(\''+lv+'\')"':'';
+  return '<span class="pill '+lv+'"'+cl+'>'+t+'</span>';
+}
+function renderStaff(){
+  const nf=STAFF_NEW.filter(s=>matchScope(s.fac)).map(s=>Object.assign({grp:'新人'},s));
+  const mf=STAFF_MANUAL.filter(s=>matchScope(s.fac)).map(s=>Object.assign({grp:'手動'},s));
+  const all=nf.concat(mf);
+  const rCnt=all.filter(s=>s.level==='r').length, yCnt=all.filter(s=>s.level==='y').length;
+  const card=(active,cls,icon,label,val,onclick)=>'<div class="kc '+cls+(onclick?' click':'')+(active?' sel':'')+'"'+(onclick?' onclick="'+onclick+'"':'')+'><div class="kl">'+icon+' '+label+'</div><div class="kv"><span>'+val+'</span><span class="ku">人</span></div></div>';
+  document.getElementById('staff-kpi').innerHTML=
+    card(false,'','👥','在職員工總數',87,'')+
+    card(staffLevel==='y','y','🟡','列管中（黃燈）',yCnt,"staffSev('y')")+
+    card(staffLevel==='r','r','🔴','列管中（紅燈）',rCnt,"staffSev('r')");
+  document.querySelectorAll('[data-ft]').forEach(b=>b.classList.toggle('on', b.dataset.ft===staffTabCur && !staffLevel));
+  const body=document.getElementById('staff-body');
+  if(staffLevel){
+    const rows=all.filter(s=>s.level===staffLevel);
+    const clr='<span class="sc" style="cursor:pointer;color:var(--brand)" onclick="staffSev(\''+staffLevel+'\')">✕ 清除燈號篩選</span>';
+    body.innerHTML='<div class="sh2"><div class="st">'+(staffLevel==='r'?'🔴 紅燈':'🟡 黃燈')+' 列管員工（新人＋手動）</div><span class="sc">'+rows.length+' 人</span>'+clr+'</div>'+
+      '<div class="tw"><table><thead><tr><th>姓名</th><th>職務</th><th>機構</th><th>類別</th><th>燈號</th><th>說明</th></tr></thead><tbody>'+
+      rows.map(s=>'<tr><td><strong>'+s.name+'</strong></td><td>'+s.role+'</td><td>'+s.fac+'</td><td>'+s.grp+(s.days?'·'+s.days+'天':'')+'</td><td>'+pillOf(s.level,false)+(s.over?' <span class="pill r">逾期</span>':'')+'</td><td style="font-size:12px;color:var(--ts)">'+s.note+'</td></tr>').join('')+
+      '</tbody></table></div>';
+    return;
+  }
+  if(staffTabCur==='new'){
+    body.innerHTML='<div class="sh2"><div class="st">入職未滿 3 個月（依評核自動判定）</div><span class="sc">'+nf.length+' 人</span></div>'+
+      '<div class="tw"><table><thead><tr><th>姓名</th><th>職務</th><th>機構</th><th>入職天數</th><th>燈號</th><th>評核說明</th></tr></thead><tbody>'+
+      nf.map(s=>'<tr><td><strong>'+s.name+'</strong></td><td>'+s.role+'</td><td>'+s.fac+'</td><td class="n">'+s.days+' 天</td><td>'+pillOf(s.level,true)+'</td><td style="font-size:12px;color:var(--ts)">'+s.note+'</td></tr>').join('')+
+      '</tbody></table></div>';
+  }else{
+    body.innerHTML='<div class="sh2"><div class="st">手動列管（到職超過 3 個月）</div><span class="sc">'+mf.length+' 人</span></div>'+
+      '<div class="tw"><table><thead><tr><th>姓名</th><th>職務</th><th>機構</th><th>燈號</th><th>列管說明</th></tr></thead><tbody>'+
+      mf.map(s=>'<tr><td><strong>'+s.name+'</strong></td><td>'+s.role+'</td><td>'+s.fac+'</td><td>'+pillOf(s.level,true)+(s.over?' <span class="pill r">逾期</span>':'')+'</td><td style="font-size:12px;color:var(--ts)">'+s.note+'</td></tr>').join('')+
+      '</tbody></table></div>';
   }
 }
+function staffTab(btn,t){ staffTabCur=t; staffLevel=null; renderStaff(); }
+function staffSev(lv){ staffLevel=(staffLevel===lv?null:lv); renderStaff(); }
 
-function tab(btn, page, id) {
-  const pv = document.getElementById('pv-' + page);
-  pv.querySelectorAll('.sv').forEach(v => v.classList.remove('on'));
-  pv.querySelectorAll('.tb').forEach(b => b.classList.remove('on'));
-  document.getElementById('sv-' + page + '-' + id).classList.add('on');
-  btn.classList.add('on');
-  filterAll();
+function renderAdmin(){
+  const el=document.getElementById('admin-orgs');
+  function line(tag,desc,body){return '<div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><span style="font-size:11px;font-weight:700;background:#334155;color:#94a3b8;border-radius:4px;padding:2px 7px">'+tag+'</span><span style="font-size:11px;color:var(--tm)">'+desc+'</span></div><div style="font-size:12px;color:var(--ts)">'+body+'</div></div>';}
+  let html=line('新館','3 機構',FACILITIES.filter(f=>f.zone==='新館').map(f=>f.name+'（'+f.beds+'床）').join('・'));
+  html+=line('本館','15 機構 · 5 樓層分區（每層 3 間清X · 48床）',
+     FLOORS.map(fl=>fl.name+'：'+fl.facs.join('・')).join('<br>'));
+  html+=line('護理之家','1 機構','護理之家（96床）');
+  html+=line('👁 督導管理整體','跨機構／跨院區督導分區（三層燈號最上層）',
+     SUPZONES.map(sz=>sz.name+'（'+sumBeds(supFacs(sz))+'床）').join('<br>'));
+  html+='<div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><span style="color:var(--tm)">床位代碼</span>　<span style="font-size:12px">C＝福氣心平安／D＝春日照風景／E＝山泉水清涼（清X）、A＝新館、N＝護理之家</span></div>'+
+    '<div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><span style="color:var(--tm)">版本</span>　<span style="font-weight:600">v3.6 儀表板頂部卡片化·員工燈號可點·移除總表待辦</span></div>'+
+    '<div style="padding:9px 15px;border-bottom:1px solid var(--bd)"><span style="color:var(--tm)">資料模式</span>　<span class="pill y">示範假資料</span></div>'+
+    '<div style="padding:9px 15px"><span style="color:var(--tm)">待校正</span>　<span style="font-size:12px">實際床數、督導分區門檻（暫定）、E/N 床位代碼</span></div>';
+  el.innerHTML=html;
 }
 
-/* ── 時間顯示 ── */
-function tick() {
-  const now = new Date();
-  document.getElementById('hd-d').textContent =
-    now.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
-  document.getElementById('upd').textContent =
-    now.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}) + ' 更新';
-  const u2=document.getElementById('db-upd2');
-  if(u2) u2.textContent='更新於 '+now.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+function updateBadges(){
+  const resCnt=residentsList().filter(r=>r.ev.some(e=>e.status==='listed')).length;
+  const nb=document.getElementById('nb-resident'); nb.textContent=resCnt; nb.style.display=resCnt?'':'none';
+  const vipCnt=residentsList().filter(r=>r.vip||r.newres).length;
+  const nv=document.getElementById('nb-vip'); nv.textContent=vipCnt; nv.style.display=vipCnt?'':'none';
+  const stCnt=[...STAFF_NEW,...STAFF_MANUAL].filter(s=>s.level!=='g').length;
+  const ns=document.getElementById('nb-staff'); ns.textContent=stCnt; ns.style.display=stCnt?'':'none';
 }
-tick(); setInterval(tick, 60000);
 
-/* 首次載入即同步統計 */
-filterAll();
+function renderAll(){
+  renderDashboard(); renderResident(); renderVIP(); renderStaff(); renderAdmin(); updateBadges(); updateScope();
+}
+function updateScope(){ const e=document.getElementById('scope-now'); if(e)e.textContent='目前範圍：'+scopeLabel(); }
+
+/* ── 收錄規則模組：跳章節 ── */
+function rjump(id){ const el=document.getElementById(id); if(el)el.scrollIntoView({behavior:'smooth',block:'start'}); return false; }
+
+/* ── 收錄規則內容（燈號速查表＋完整規則，依〈異常示警收錄規則 V1.0〉） ── */
+function buildRules(){
+ const R='<span class="pill r">紅燈</span>', Y='<span class="pill y">黃燈</span>', G='<span class="pill g">綠燈</span>';
+ const h='<div class="rsec" id="r-quick"><h3><span class="rno">⚡</span>燈號速查表</h3>'+
+  '<p class="rlead">各類異常收錄條件與燈號一覽；詳細降級、解除與反覆規則見下方各章。</p>'+
+  '<div class="tw"><table><thead><tr><th>類別</th><th>'+Y+' 黃燈條件</th><th>'+R+' 紅燈條件</th></tr></thead><tbody>'+
+  '<tr><td>皮膚·一般/小傷口</td><td>3 日未改善或惡化</td><td>超過 7 日未改善</td></tr>'+
+  '<tr><td>皮膚·中傷口(2×2–5×5)</td><td>一出現即黃</td><td>7 日未改善</td></tr>'+
+  '<tr><td>皮膚·大/深傷口・感染性皮膚病</td><td>—</td><td>一出現/確診即紅</td></tr>'+
+  '<tr><td>壓傷 1–2 級</td><td>收錄即黃</td><td>1級 7日/2級 14日未改善或惡化升級</td></tr>'+
+  '<tr><td>壓傷 3–4 級・無法分級・深部</td><td>—</td><td>收錄即紅（院內新發再提高一級）</td></tr>'+
+  '<tr><td>行為·攻擊/自傷/企圖離院</td><td>未造成傷害</td><td>造成傷害/拔管/已離院走失</td></tr>'+
+  '<tr><td>行為·躁動/拒絕照護/精神症狀</td><td>7 日內 3 次</td><td>7 日內 5 次；連 2 日拒服慢性病藥</td></tr>'+
+  '<tr><td>行為·拒食</td><td>連 2 日每餐不到一半</td><td>連續 3 日</td></tr>'+
+  '<tr><td>行為·不當性行為</td><td>—</td><td>一律紅</td></tr>'+
+  '<tr><td>住院（非計畫）</td><td>第 1 次</td><td>90日內第2次／出院14日內再住院／加護病房或病危</td></tr>'+
+  '<tr><td>跌倒</td><td>無傷或輕微擦挫傷</td><td>骨折/縫合/頭部撞擊；90日內第2次</td></tr>'+
+  '<tr><td>家屬爭議</td><td>口頭不滿（有紀錄）</td><td>書面申訴／揚言提告陳情／要求賠償／30日內第2次</td></tr>'+
+  '<tr><td>門診就醫（當月累計）</td><td>2 次</td><td>3 次以上</td></tr>'+
+  '</tbody></table></div>'+
+  '<h4>機構總燈號（依住民人數÷床數）</h4><div class="tw"><table><thead><tr><th>機構規模</th><th>'+R+'</th><th>'+Y+'</th></tr></thead><tbody>'+
+  '<tr><td>48 床</td><td>紅燈住民 ≥3</td><td>紅 1–2，或黃 ≥3</td></tr>'+
+  '<tr><td>96–100 床</td><td>紅燈住民 ≥6</td><td>紅 1–5，或黃 ≥6</td></tr>'+
+  '<tr><td>144 床（本館樓層分區）</td><td>紅燈住民 ≥9</td><td>紅 1–8，或黃 ≥9</td></tr>'+
+  '<tr><td>200 床</td><td>紅燈住民 ≥12</td><td>紅 1–11，或黃 ≥12</td></tr>'+
+  '</tbody></table></div><div class="note">機構只要有任一紅燈住民，總燈號至少為黃燈。紅燈住民含「多重異常提高」者。員工不列入。<br>本館採<strong>三層</strong>：清X機構 48床（紅≥3）→ 樓層分區 144床（紅≥9）→ 督導管理整體（新館整體 500床、本館8+7+6 432床、本館5+3+護理之家 384床，依合計床數延伸門檻）。<span class="tagq">門檻暫定</span></div></div>'+
+
+  '<div class="rsec" id="r-common"><h3><span class="rno">共用</span>共用原則</h3>'+
+  '<p>以<strong>事件</strong>為單位列管，各自判定燈號、降級與解除；另加住民層級「多重異常」判定。</p>'+
+  '<ul><li><strong>降級</strong>（紅→黃）由系統依紀錄自動判定。</li><li><strong>解除列管</strong>須由主管確認才生效；黃燈須走完各類觀察期，不得因單筆「已改善」直接解除。</li><li>例外：門診依每月次數自動判定；員工另訂手動列管。</li></ul>'+
+  '<h4>紀錄文字歸類（每日處理，不使用 AI）</h4><ul><li>流程：粗篩關鍵字 → 同義詞表／否定詞表／擷取數值 → 判斷不了者送「待人工確認」。</li><li>每日處理一次，不另做每週複審；字典更新只往後生效，不回溯重判。</li><li>新詞由總部統一審核，避免各機構歸類不一。</li></ul>'+
+  '<h4>待人工確認</h4><p>六種情況會送確認：①否定與肯定並存②抓不到數值/等級③語氣不確定（疑似/可能）④類別不易判斷⑤字典未收錄的寫法⑥缺少判定關鍵資訊。</p>'+
+  '<ul><li>由各機構<strong>有管理權限的帳號</strong>處理（可互相代理）；確認前暫列 '+Y+' 並標示「待確認」。</li><li>須於 <span class="n">24</span> 小時內處理，逾時計入「逾期」；黃燈與標示繼續保留，不自動升降。</li></ul>'+
+  '<h4>確認後三種結果</h4><div class="tw"><table><tbody>'+
+  '<tr><td>已達收錄條件</td><td>補齊欄位，系統依規則套用正確燈號</td></tr>'+
+  '<tr><td>尚未達收錄條件</td><td>自戰情表移除，轉「追蹤中」，背景繼續計算天數</td></tr>'+
+  '<tr><td>不是異常</td><td>刪除、不留列管；系統保留操作紀錄（暫定 1 年）<span class="tagq">期限暫定</span></td></tr>'+
+  '</tbody></table></div></div>'+
+
+  '<div class="rsec" id="r-skin"><h3><span class="rno">01</span>皮膚異常</h3><p class="rlead">分一般皮膚狀況、傷口、壓傷、感染性皮膚病。破皮改按傷口；發紅壓不退色屬 1 級壓傷；感染性皮膚病確診即 '+R+'。</p>'+
+  '<h4>傷口（長×寬，公分）</h4><div class="tw"><table><thead><tr><th>等級</th><th>標準</th><th>燈號</th></tr></thead><tbody>'+
+  '<tr><td>小傷口</td><td>表淺且小於 2×2</td><td>3日未改善→'+Y+'；7日未改善→'+R+'</td></tr>'+
+  '<tr><td>中傷口</td><td>表淺，2×2–5×5</td><td>即 '+Y+'；7日未改善→'+R+'</td></tr>'+
+  '<tr><td>大/深傷口</td><td>≥5×5／深及皮下／有感染徵象</td><td>即 '+R+'</td></tr></tbody></table></div>'+
+  '<h4>壓傷（一律收錄，院內新發再提高一級）</h4><div class="tw"><table><thead><tr><th>等級</th><th>收錄燈號</th><th>升紅條件</th></tr></thead><tbody>'+
+  '<tr><td>1 級</td><td>'+Y+'</td><td>7日未改善或惡化為2級</td></tr><tr><td>2 級</td><td>'+Y+'</td><td>14日未改善或惡化為3級</td></tr><tr><td>3/4級·無法分級·深部</td><td>'+R+'</td><td>—</td></tr></tbody></table></div>'+
+  '<h4>反覆發生</h4><ul><li>同部位解除後 30 日內再發 → 回到解除前最高燈號。</li><li>不同部位 30 日內累積 3 筆 → '+Y+'「反覆皮膚異常」。</li><li>不明原因瘀青 30 日內 2 次 → '+Y+'。</li></ul></div>'+
+
+  '<div class="rsec" id="r-behavior"><h3><span class="rno">02</span>行為異常</h3><p class="rlead">攻擊、自傷、遊走或離院、拒絕照護、拒食、躁動、不當性行為、精神症狀。</p>'+
+  '<div class="tw"><table><thead><tr><th>行為</th><th>'+Y+'</th><th>'+R+'</th></tr></thead><tbody>'+
+  '<tr><td>攻擊</td><td>未造成傷害</td><td>造成他人受傷</td></tr><tr><td>自傷</td><td>未造成傷害</td><td>造成傷害或拔除管路</td></tr>'+
+  '<tr><td>遊走/離院</td><td>企圖離院被攔下</td><td>已離開機構或走失</td></tr><tr><td>躁動/精神症狀</td><td>7日內3次</td><td>7日內5次以上</td></tr>'+
+  '<tr><td>拒絕照護</td><td>7日內3次</td><td>連2日拒服慢性病藥</td></tr><tr><td>拒食</td><td>連2日每餐不到一半</td><td>連續3日</td></tr>'+
+  '<tr><td>不當性行為</td><td>—</td><td>一律紅</td></tr></tbody></table></div>'+
+  '<p style="margin-top:8px">反覆：解除後 30 日內同類再發，直接回到解除前最高燈號。走失、不當性行為不自動降級。</p></div>'+
+
+  '<div class="rsec" id="r-hosp"><h3><span class="rno">03</span>住院</h3><p class="rlead">只收錄非計畫性住院；急診留觀超過 24 小時視為非計畫性住院。計畫性住院不收錄。</p>'+
+  '<div class="tw"><table><tbody><tr><td>非計畫性住院（第1次）</td><td>'+Y+'</td></tr><tr><td>90日內第2次</td><td>'+R+'</td></tr><tr><td>出院14日內再住院</td><td>'+R+'</td></tr><tr><td>加護病房／病危通知</td><td>'+R+'</td></tr></tbody></table></div>'+
+  '<p style="margin-top:8px">降級：轉回一般病房，因加護/病危列紅者降黃（若同時符合90日第2次或14日再住院則維持紅）；回機構14日內未再住院→黃；30日內未再住院經主管確認→解除。</p></div>'+
+
+  '<div class="rsec" id="r-fall"><h3><span class="rno">04</span>跌倒</h3><p class="rlead">收錄跌倒、滑落、被發現坐臥在地（無人目擊）；跌倒未遂（被扶住）不收錄。</p>'+
+  '<div class="tw"><table><tbody><tr><td>無傷或輕微擦挫傷</td><td>'+Y+'</td></tr><tr><td>骨折／縫合／頭部撞擊</td><td>'+R+'</td></tr><tr><td>90日內第2次（不論有無受傷）</td><td>'+R+'</td></tr></tbody></table></div>'+
+  '<p style="margin-top:8px">擦挫傷另依皮膚規則追蹤，不重複計算。解除後「90日內第2次」計算仍有效，故不另訂反覆規則。</p></div>'+
+
+  '<div class="rsec" id="r-family"><h3><span class="rno">05</span>家屬爭議</h3><p class="rlead">一般詢問或建議（無不滿）不收錄。</p>'+
+  '<div class="tw"><table><tbody><tr><td>口頭表達不滿（有紀錄）</td><td>'+Y+'</td></tr><tr><td>書面申訴（信件/郵件/意見箱/LINE）</td><td>'+R+'</td></tr><tr><td>揚言提告/找媒體/民代/主管機關陳情</td><td>'+R+'</td></tr><tr><td>要求賠償</td><td>'+R+'</td></tr><tr><td>同一住民家屬30日內第2次反映</td><td>'+R+'</td></tr></tbody></table></div>'+
+  '<p style="margin-top:8px">召開說明會或主管面談（有紀錄）→ 紅降黃；家屬接受或14日內未再反映經主管確認→解除。提告/陳情不降級，待結案才解除。</p></div>'+
+
+  '<div class="rsec" id="r-clinic"><h3><span class="rno">06</span>門診就醫</h3><p class="rlead">配合減少就醫方案，只計就醫次數，不判斷病況嚴重度。以月計、每月1日歸零；門診/急診/定期回診都計一次。</p>'+
+  '<div class="tw"><table><tbody><tr><td>當月累計 2 次</td><td>'+Y+'</td></tr><tr><td>當月累計 3 次以上</td><td>'+R+'</td></tr></tbody></table></div><p style="margin-top:8px">月底結算後自動歸零，不需主管確認。</p></div>'+
+
+  '<div class="rsec" id="r-vip"><h3><span class="rno">07</span>VIP 住民</h3><p class="rlead">VIP 是住民身分標記，不是事件類別。</p><ul><li>不改變燈號，事件照各類別規則判定，名字加 ★。</li><li>在「VIP 及新入住民」頁集中列出動態；名單由集團集中管理。</li><li>不計入多重異常的類別數；退住或死亡自動移出。</li></ul></div>'+
+
+  '<div class="rsec" id="r-newres"><h3><span class="rno">08</span>新入住民</h3><p class="rlead">身分標記，處理方式比照 VIP。</p><ul><li>期間：入住後 <span class="n">30</span> 日內；不改變燈號，名字加「新」。</li><li>在「VIP 及新入住民」頁集中列出異常；不計入多重異常的類別數。</li></ul></div>'+
+
+  '<div class="rsec" id="r-staff"><h3><span class="rno">09</span>員工管理</h3><p class="rlead">單獨顯示，不計入機構總燈號與多重異常。依到職日分「3個月內新人」與「超過3個月」，預設 '+G+'。</p>'+
+  '<h4>新人：依評核自動判定<span class="tagq">分級名稱暫定</span></h4><div class="tw"><table><tbody><tr><td>任一次評核有項目「待加強」</td><td>'+Y+'</td></tr><tr><td>某項技能超過學習期限未通過</td><td>'+Y+'</td></tr><tr><td>連續2次評核同項仍「待加強」</td><td>'+R+'</td></tr><tr><td>任一項目「不適任」</td><td>'+R+'</td></tr></tbody></table></div>'+
+  '<p style="margin-top:8px">滿3個月移出新人組；仍紅燈者轉手動列管。</p>'+
+  '<h4>超過3個月：手動列管</h4><p>由管理者輸入列管紀錄、輔導紀錄（每次累加）、自訂升降燈條件。輔導頻率：第1月每週1筆、第2月每14日1筆、第3月不限；滿90日須決定解除或續管（未決定計逾期），續管重啟一輪。</p></div>'+
+
+  '<div class="rsec" id="r-combo"><h3><span class="rno">複合</span>複合規則</h3>'+
+  '<h4>多重異常住民</h4><ul><li>同一住民同時有 <strong>2 類以上</strong>事件列管中（以類別計）。</li><li>列入：皮膚、行為、住院、跌倒、家屬、門診；VIP／新入住／員工不列入。</li><li>住民燈號提高為 '+R+'「多重異常提高」，並附註各類原燈號；事件解除後自然消失。</li></ul>'+
+  '<h4>機構總燈號</h4><p>以住民人數計（非件數），紅燈住民含多重異常者，員工不列入。門檻見上方速查表。</p>'+
+  '<h4>三層燈號（清X → 樓層分區 → 督導管理整體）</h4><p>本館保留清X機構單位，並以樓層分區（8F福春山／7F氣日泉／6F心照水／5F平風清／3F安景涼，每層 3 間清X · 48床）作為中間層。最上層改以<strong>各級督導管理整體</strong>分區（跨機構／跨院區的督導管理單位）：</p><ul><li>新館整體：一館＋二館＋三館</li><li>本館 8F＋7F＋6F</li><li>本館 5F＋3F＋護理之家</li></ul><p>清X機構（48床）→ 樓層分區（144床）→ 督導管理整體（依該分區合計床數）。各層依該層床數套用門檻，供對應層級主管一眼掌握優先關懷範圍。</p></div>'+
+
+  '<div class="rsec" id="r-pending"><h3><span class="rno">待審</span>待審核事項</h3><ul>'+
+  '<li>新人評核分級名稱（通過／待加強／不適任）需對應實際評核表。</li>'+
+  '<li>機構總燈號人數門檻（48／96–100／144／200 床）。</li>'+
+  '<li>「不是異常」刪除後的操作紀錄保留期限（暫定 1 年）。</li></ul>'+
+  '<div class="note">本規則文件版本 V1.0（初稿 2026-10-01，最後修訂 2026-10-04）；完整版另存於專案文件〈異常示警收錄規則_v1〉。</div></div>';
+ document.getElementById('rule-main').innerHTML=h;
+}
+
+/* ── 時間 ── */
+function tick(){
+  const now=new Date();
+  document.getElementById('hd-d').textContent=now.toLocaleDateString('zh-TW',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
+  document.getElementById('upd').textContent=now.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})+' 更新';
+  const u2=document.getElementById('db-upd2'); if(u2)u2.textContent='更新於 '+now.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+}
+tick(); setInterval(tick,60000);
+buildRules();
+renderAll();
 </script>
